@@ -1,7 +1,7 @@
 import {View, Text, Button, StyleSheet} from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import React from 'react';
-import Dashboard from './screens/Dashboard';
+import Dashboard from './screens/Main';
 import Graphs from './screens/Graphs';
 import Settings from './screens/Settings';
 import Profile from './screens/Profile';

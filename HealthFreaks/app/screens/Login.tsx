@@ -50,10 +50,8 @@ const Login = () => {
                 </View>
                 {loading ? <ActivityIndicator size="large" color="#0000ff" />
                     : <>
-                        <View style={{marginTop:32}}>
+                        <View style={{marginTop:32, flexDirection:'column', rowGap:10}}>
                             <Button title="Login" onPress={signIn} />
-                        </View>
-                        <View style={{marginTop:8}}>
                             <Button title="Create Account" onPress={signUp} />
                         </View>
                     </>}

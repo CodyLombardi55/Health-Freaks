@@ -7,10 +7,11 @@ interface RouterProps {
     navigation: NavigationProp<any, any>;
 }
 
-const Settings = ({}: RouterProps) => {
+const Settings = ({navigation}: RouterProps) => {
     return (
         <View >
-            <Button onPress={() => FIREBASE_AUTH.signOut()}title="Logout"/>
+            <Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout"/>
+            <Button onPress={() => navigation.navigate('Profile Settings')} title="Profile"/>
         </View>
     );
 };
