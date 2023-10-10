@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { FIREBASE_AUTH } from '../../FireBaseConfig';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useFonts } from 'expo-font';
 
 const Login = () => {
     const [email, setEmail] = useState('');         //email text entry current state
@@ -10,6 +11,9 @@ const Login = () => {
     const [loading, setLoading] = useState(false);  //loading state
     const [hidePassword, setHidePassword] = useState(true); //password entry visibility state
     const auth = FIREBASE_AUTH;
+    //const [fontsLoaded] = useFonts({
+    //    'street-soul': require('../resources/street soul.tff'),
+    //});
 
 
     const signIn = async () => {
