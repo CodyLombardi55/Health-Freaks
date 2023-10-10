@@ -23,7 +23,7 @@ const Main = () => {
     <Tab.Navigator>
       <Tab.Screen name='Dashboard' component={Dashboard} />
       <Tab.Screen name='Graphs' component={Graphs} />
-      <Tab.Screen name='BMICalc' component={BMICalc} />
+      <Tab.Screen name='BMICalc' component={BMICalc} options={{ headerShown: false }} />
       <Tab.Screen name='Timer' component={Timer} />
       <Tab.Screen name='Settings' component={Settings} />
     </Tab.Navigator>

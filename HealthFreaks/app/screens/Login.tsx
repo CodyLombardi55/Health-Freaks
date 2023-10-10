@@ -43,14 +43,14 @@ const Login = () => {
         <View style={styles.container}>
             <KeyboardAvoidingView behavior='padding'>
                 <Text style={styles.title}>Health Freaks</Text>
-                <TextInput value={email} style={styles.input} placeholder="Email" placeholderTextColor='#999' autoCapitalize='none' onChangeText={(text) => setEmail(text)}></TextInput>
-                <View style={[styles.input, styles.passwordInput]}>
-                    <TextInput secureTextEntry={hidePassword} value={password} style={{ flex: 1, paddingLeft: 10 }} placeholder="Password" placeholderTextColor='#999' autoCapitalize='none' onChangeText={(text) => SetPassword(text)}></TextInput>
+                <TextInput value={email} style={styles.inputField} placeholder="Email" placeholderTextColor='#999' autoCapitalize='none' onChangeText={(text) => setEmail(text)}></TextInput>
+                <View style={[styles.inputField, { padding: 0 }]}>
+                    <TextInput secureTextEntry={hidePassword} value={password} style={styles.inputToggle} placeholder="Password" placeholderTextColor='#999' autoCapitalize='none' onChangeText={(text) => SetPassword(text)}></TextInput>
                     <Ionicons name={hidePassword ? 'eye-off' : 'eye'} size={32} style={{ alignSelf: 'center', padding: 4 }} onPress={() => { setHidePassword(!hidePassword) }} />
                 </View>
                 {loading ? <ActivityIndicator size="large" color="#0000ff" />
                     : <>
-                        <View style={{marginTop:32, flexDirection:'column', rowGap:10}}>
+                        <View style={{ marginTop: 32, flexDirection: 'column', rowGap: 10 }}>
                             <Button title="Login" onPress={signIn} />
                             <Button title="Create Account" onPress={signUp} />
                         </View>
@@ -68,17 +68,21 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
     },
-    input: {
+    inputField: {
         marginVertical: 4,
         height: 50,
         borderWidth: 1,
         borderRadius: 4,
         padding: 10,
         backgroundColor: '#fff',
-    },
-    passwordInput: {
         flexDirection: 'row',
-        padding: 0,
+        fontSize: 20,
+    },
+    inputToggle: {
+        fontSize: 20,
+        flex: 1,
+        padding: 10,
+        borderRadius: 4,
     },
     title: {
         fontSize: 32,
