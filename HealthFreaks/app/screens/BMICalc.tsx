@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Pressable } from 'react-native'
-
+ 
 function BMICalc() {
    const [height, setHeight] = useState('');
    const [weight, setWeight] = useState('');
