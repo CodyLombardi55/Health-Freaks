@@ -11,9 +11,6 @@ const Login = () => {
     const [loading, setLoading] = useState(false);  //loading state
     const [hidePassword, setHidePassword] = useState(true); //password entry visibility state
     const auth = FIREBASE_AUTH;
-    //const [fontsLoaded] = useFonts({
-    //    'street-soul': require('../resources/street soul.tff'),
-    //});
 
 
     const signIn = async () => {
@@ -45,7 +42,7 @@ const Login = () => {
 
     return (
         <View style={styles.container}>
-            <ImageBackground source={require('../resources/BACKGROUND.png')} resizeMode='cover' style={styles.image}>
+            <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={styles.image}>
                 <KeyboardAvoidingView behavior='padding' style={{ marginHorizontal: 20 }}>
                     <Text style={styles.title}>Health Freaks</Text>
                     <TextInput value={email} style={styles.inputField} placeholder="Email" placeholderTextColor='#999' autoCapitalize='none' onChangeText={(text) => setEmail(text)}></TextInput>

@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, KeyboardAvoidingView, Button, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { FIREBASE_AUTH, FIRESTORE_DB } from '../../FireBaseConfig';
 
 function Profile() {
     const [firstName, setFirstName] = useState('');
@@ -11,6 +13,45 @@ function Profile() {
     const [sex, setSex] = useState('');
     const [metricUnits, setUnits] = useState(true)
 
+    const docRef = doc(FIRESTORE_DB, 'users', String(FIREBASE_AUTH.currentUser?.email));
+
+    async function saveData() {
+        try {
+            await setDoc(docRef, {
+                firstName: firstName,
+                lastName: lastName,
+                age: parseInt(age),
+                height: parseFloat(height),
+                weight: parseFloat(weight),
+                sex: sex,
+                metricUnits: metricUnits,
+            });
+            console.log('Data saved to user: ', FIREBASE_AUTH.currentUser?.email);
+            alert('User info saved!');
+        } catch (error) {
+            console.log('Error saving data: ', error);
+            alert('Failed to save info: ', error.message);
+        }
+    }
+
+    async function loadData() {
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            console.log('Loaded data from: ', FIREBASE_AUTH.currentUser?.email);
+            //overwrite current field values
+            setFirstName(docSnap.data().firstName);
+            setLastName(docSnap.data().lastName);
+            setAge(docSnap.data().age);
+            setHeight(docSnap.data().height);
+            setWeight(docSnap.data().weight);
+            setSex(docSnap.data().sex);
+            setUnits(docSnap.data().metricUnits);
+        } else {
+            console.log('Document unavailable.');
+        }
+    }
+
+    useEffect(() => { loadData() }, []); //load initial data on load
 
     return (
         <View style={styles.container}>
@@ -76,10 +117,7 @@ function Profile() {
             </KeyboardAvoidingView>
             <Button
                 title='Save'
-                onPress={() => {
-                    console.log('profile settings saved');
-                    alert('Profile saved');
-                }}
+                onPress={saveData}
             />
         </View>
     )
