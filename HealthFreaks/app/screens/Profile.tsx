@@ -15,6 +15,34 @@ function Profile() {
 
     const docRef = doc(FIRESTORE_DB, 'users', String(FIREBASE_AUTH.currentUser?.email));
 
+    function validateInput() {
+        let valid = true;
+        const fields = [firstName, lastName, age, height, weight, sex];
+
+        //check for empty input
+        for (let val in fields) {
+            if (!fields[val]) {
+                valid = false;
+                break;
+            }
+        }
+
+        //check for valid number inputs
+        const numbers = [age, height, weight]
+        for (let val in numbers) {
+            if (isNaN(+numbers[val])) {
+                valid = false;
+            }
+        }
+
+        //all inputs are valid
+        if (valid) {
+            saveData();
+        } else {
+            alert('Failed to save: Invalid input!');
+        }
+    }
+
     async function saveData() {
         try {
             await setDoc(docRef, {
@@ -28,9 +56,9 @@ function Profile() {
             });
             console.log('Data saved to user: ', FIREBASE_AUTH.currentUser?.email);
             alert('User info saved!');
-        } catch (error) {
+        } catch (error: any) {
             console.log('Error saving data: ', error);
-            alert('Failed to save info: ', error.message);
+            alert('Failed to save info: ' + error.message);
         }
     }
 
@@ -41,9 +69,9 @@ function Profile() {
             //overwrite current field values
             setFirstName(docSnap.data().firstName);
             setLastName(docSnap.data().lastName);
-            setAge(docSnap.data().age);
-            setHeight(docSnap.data().height);
-            setWeight(docSnap.data().weight);
+            setAge(String(docSnap.data().age));
+            setHeight(String(docSnap.data().height));
+            setWeight(String(docSnap.data().weight));
             setSex(docSnap.data().sex);
             setUnits(docSnap.data().metricUnits);
         } else {
@@ -117,7 +145,7 @@ function Profile() {
             </KeyboardAvoidingView>
             <Button
                 title='Save'
-                onPress={saveData}
+                onPress={validateInput}
             />
         </View>
     )
