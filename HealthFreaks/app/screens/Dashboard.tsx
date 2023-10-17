@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import useHealthData from '../util/HealthData';
 
 export default function Dashboard() {
-    const {steps, calories, distance} = useHealthData();
+    const [steps, setSteps] = useState(0);
+    const [calories, setCalories] = useState(0);
 
     return (
         <View style={styles.container}>
