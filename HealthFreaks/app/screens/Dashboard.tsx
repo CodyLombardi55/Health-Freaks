@@ -1,14 +1,5 @@
-import { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-
-const useHealthData = () => {
-    const [steps, setSteps] = useState(0);
-    const [calories, setCalories] = useState(0);
-    const [distance, setDistance] = useState(0);
-
-    // HealthKit implementation
-    return { steps, calories, distance};
-};
+import useHealthData from '../util/HealthData';
 
 export default function Dashboard() {
     const {steps, calories, distance} = useHealthData();
