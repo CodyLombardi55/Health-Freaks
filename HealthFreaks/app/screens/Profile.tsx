@@ -1,6 +1,5 @@
-import { View, Text, StyleSheet, KeyboardAvoidingView, Button, Pressable } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Button, Pressable, TextInput } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { TextInput } from 'react-native-gesture-handler';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIRESTORE_DB } from '../../FireBaseConfig';
 
@@ -107,7 +106,9 @@ function Profile() {
                         style={styles.inputToggle}
                         keyboardType='number-pad'
                     />
-                    <Text style={styles.inputToggle}>years</Text>
+                    <Pressable>
+                        <Text style={styles.inputToggle}>years</Text>
+                    </Pressable>
                 </View>
                 <View style={[styles.inputField, { padding: 0 }]}>
                     <TextInput

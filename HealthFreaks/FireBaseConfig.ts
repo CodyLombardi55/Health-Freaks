@@ -1,18 +1,9 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from 'firebase/auth';
+import { getAuth, initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const firebaseConfig = {
-  /* current firebase credentials
-  apiKey: "AIzaSyCMsl2G62WIrICbKKbbVDTQqAiRVwAsLIQ",
-  authDomain: "newapp-ed3bb.firebaseapp.com",
-  projectId: "newapp-ed3bb",
-  storageBucket: "newapp-ed3bb.appspot.com",
-  messagingSenderId: "27225001628",
-  appId: "1:27225001628:web:5990619411ed71691e2759"
-  */
-  //testing firebase credentials
   apiKey: "AIzaSyDlU1sOcii2WT0UauvIY8XPICA1kcT9_GY",
   authDomain: "healthfreaksapp.firebaseapp.com",
   projectId: "healthfreaksapp",
@@ -23,5 +14,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const FIREBASE_APP = initializeApp(firebaseConfig);
-export const FIREBASE_AUTH = getAuth(FIREBASE_APP);
+export const FIREBASE_AUTH = initializeAuth(FIREBASE_APP, {
+  persistence: getReactNativePersistence(AsyncStorage)
+});
 export const FIRESTORE_DB = getFirestore(FIREBASE_APP);

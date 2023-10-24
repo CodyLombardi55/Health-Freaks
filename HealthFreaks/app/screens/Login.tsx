@@ -1,9 +1,8 @@
 import { View, Text, StyleSheet, Button, TextInput, KeyboardAvoidingView, ActivityIndicator, ImageBackground } from 'react-native';
 import React, { useState } from 'react';
 import { FIREBASE_AUTH } from '../../FireBaseConfig';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useFonts } from 'expo-font';
 
 const Login = () => {
     const [email, setEmail] = useState('');         //email text entry current state

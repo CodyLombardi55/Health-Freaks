@@ -4,7 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { User, onAuthStateChanged } from 'firebase/auth';
-import { FIREBASE_APP, FIREBASE_AUTH } from './FireBaseConfig';
+import { FIREBASE_AUTH } from './FireBaseConfig';
+
 
 /* [Individual pages for app] */
 import Login from './app/screens/Login';
