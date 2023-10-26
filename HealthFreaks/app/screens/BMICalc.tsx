@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react'
-import { View, Text, TouchableOpacity, TextInput, StyleSheet, Pressable } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, Pressable, ImageBackground } from 'react-native'
  
 function BMICalc() {
    const [height, setHeight] = useState('');
@@ -38,37 +38,39 @@ function BMICalc() {
    }
    return (
       <View style={styles.container}>
-         <Text style={styles.title}>BMI Calculator</Text>
+         <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={styles.image}>
+            <Text style={styles.title}>BMI Calculator</Text>
 
-         <Text style={styles.label}>Height</Text>
-         <View style={[styles.inputField, { padding: 0 }]}>
-            <TextInput style={styles.inputToggle}
-               underlineColorAndroid="transparent"
-               placeholder="Height"
-               placeholderTextColor={'#999'}
-               autoCapitalize="none"
-               onChangeText={setHeight} />
-            <Pressable onPress={() => setUnits(!metricUnits)}>
-               <Text style={styles.inputToggle}>{metricUnits ? 'cm' : 'in'}</Text>
-            </Pressable>
-         </View>
-         <Text style={styles.label}>Weight</Text>
-         <View style={[styles.inputField, { padding: 0 }]}>
-            <TextInput style={styles.inputToggle}
-               underlineColorAndroid="transparent"
-               placeholder="Weight"
-               placeholderTextColor={'#999'}
-               autoCapitalize="none"
-               onChangeText={setWeight} />
-            <Pressable onPress={() => setUnits(!metricUnits)}>
-               <Text style={styles.inputToggle}>{metricUnits ? 'kg' : 'lbs'}</Text>
-            </Pressable>
-         </View>
-         <TouchableOpacity style={styles.submitButton} onPress={() => { calculate(height, weight); }}>
-            <Text style={styles.submitButtonText}> Calculate </Text>
-         </TouchableOpacity>
-         <Text style={styles.output}>{bmi}</Text>
-         <Text style={styles.resultText}>{bmiResult}</Text>
+            <Text style={styles.label}>Height</Text>
+            <View style={[styles.inputField, { padding: 0 }]}>
+               <TextInput style={styles.inputToggle}
+                  underlineColorAndroid="transparent"
+                  placeholder="Height"
+                  placeholderTextColor={'#999'}
+                  autoCapitalize="none"
+                  onChangeText={setHeight} />
+               <Pressable onPress={() => setUnits(!metricUnits)}>
+                  <Text style={styles.inputToggle}>{metricUnits ? 'cm' : 'in'}</Text>
+               </Pressable>
+            </View>
+            <Text style={styles.label}>Weight</Text>
+            <View style={[styles.inputField, { padding: 0 }]}>
+               <TextInput style={styles.inputToggle}
+                  underlineColorAndroid="transparent"
+                  placeholder="Weight"
+                  placeholderTextColor={'#999'}
+                  autoCapitalize="none"
+                  onChangeText={setWeight} />
+               <Pressable onPress={() => setUnits(!metricUnits)}>
+                  <Text style={styles.inputToggle}>{metricUnits ? 'kg' : 'lbs'}</Text>
+               </Pressable>
+            </View>
+            <TouchableOpacity style={styles.submitButton} onPress={() => { calculate(height, weight); }}>
+               <Text style={styles.submitButtonText}> Calculate </Text>
+            </TouchableOpacity>
+            <Text style={styles.output}>{bmi}</Text>
+            <Text style={styles.resultText}>{bmiResult}</Text>
+         </ImageBackground>
       </View>
    )
 }
@@ -79,11 +81,13 @@ const styles = StyleSheet.create({
       paddingTop: 23,
       marginHorizontal: 20,
       rowGap: 8,
+      backgroundColor: 'transparent',
    },
    inputField: {
       //margin: 15,
       //height: 40,
       borderWidth: 1,
+      borderColor: 'white',
       padding: 10,
       flexDirection: 'row',
       fontSize: 20,
@@ -94,14 +98,19 @@ const styles = StyleSheet.create({
       fontSize: 20,
    },
    submitButton: {
-      backgroundColor: '#ff6666',
+      backgroundColor: 'rgba(0, 0, 0, .69)',
+      borderWidth: 1,
+      borderColor: 'white',
       padding: 10,
       marginVertical: 15,
       height: 40,
+      shadowColor: 'deeppink',
+      shadowOffset: { width: 0, height: 0 }, 
+      shadowRadius: 20, 
    },
    submitButtonText: {
       textAlign: "center",
-      color: 'white',
+      color: 'deeppink',
       // fontWeight:"bold",
       fontSize: 18,
    },
@@ -126,5 +135,6 @@ const styles = StyleSheet.create({
    label: {
       //marginLeft: 15,
       fontSize: 20,
+      color: 'deeppink',
    }
 })
