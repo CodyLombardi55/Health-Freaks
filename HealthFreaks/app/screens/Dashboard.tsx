@@ -1,25 +1,13 @@
 import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Platform } from "react-native";
-import GoogleFit, { BucketOptions, Scopes, StartAndEndDate } from 'react-native-google-fit';
-import { Pedometer } from 'expo-sensors';
+//import GoogleFit, { Scopes } from 'react-native-google-fit';
 
 export default function Dashboard() {
     const [steps, setSteps] = useState(0);
     const [calories, setCalories] = useState(0);
     const [msg, setMsg] = useState('default');
-    const [pedometerAvailable, setPedometerAvailable] = useState('');
 
-
-    const subscribe = () => {
-        const subscription = Pedometer.watchStepCount((result) => {
-            setSteps(result.steps);
-        })
-        Pedometer.isAvailableAsync().then(
-            (result) => { setPedometerAvailable(String(result)); },
-            (error) => { setPedometerAvailable(error); }
-        )
-    }
-
+    /*
     const options = {
         scopes: [
             Scopes.FITNESS_ACTIVITY_READ,
@@ -34,31 +22,29 @@ export default function Dashboard() {
             Scopes.FITNESS_SLEEP_READ,
         ],
     };
-    GoogleFit.checkIsAuthorized().then(() => {
-        var authorized = GoogleFit.isAuthorized;
-        console.log(authorized);
-        if (authorized) {
-            // if already authorized, fetch data
-            setMsg('already');
-        } else {
-            // Authentication if already not authorized for a particular device
-            GoogleFit.authorize(options)
-                .then(authResult => {
-                    if (authResult.success) {
-                        console.log('AUTH_SUCCESS');
+    GoogleFit.checkIsAuthorized();
+    var authorized = GoogleFit.isAuthorized;
+    console.log(authorized);
+    if (false) {
+        // if already authorized, fetch data
+        setMsg('already');
+    } else {
+        // Authentication if already not authorized for a particular device
+        GoogleFit.authorize(options).then(authResult => {
+            if (authResult.success) {
+                console.log('AUTH_SUCCESS');
 
-                        // if successfully authorized, fetch data
-                        setMsg('authorized');
-                    } else {
-                        console.log('AUTH_DENIED ' + authResult.message);
-                        setMsg('unauthorized');
-                    }
-                })
-                .catch(() => {
-                    alert('AUTH_ERROR');
-                });
-        }
-    });
+                // if successfully authorized, fetch data
+                setMsg('authorized');
+            } else {
+                console.log('AUTH_DENIED ' + authResult.message);
+                setMsg(authResult.message);
+            }
+        })
+            .catch(() => {
+                console.log('AUTH_ERROR');
+            });
+    }
 
     var today = new Date();
     var lastWeekDate = new Date(
@@ -96,16 +82,13 @@ export default function Dashboard() {
             setCalories(Math.round(data[0].calorie * -1 * 100) / 100);
         }
     };
-
-    useEffect(() => {
-        subscribe();
-    }, []);
+    */
 
     return (
         <View style={styles.container}>
             <View style={styles.bubble}>
                 <Text style={{ fontSize: 24, alignSelf: 'center' }}>
-                    {pedometerAvailable}
+                    {msg}
                 </Text>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={[styles.container, { alignItems: 'center' }]}>
