@@ -11,9 +11,10 @@
     - npm install @react-navigation/bottom-tabs
     - npm install @react-navigation/native-stack
     - npx expo install firebase
-6. Move the following folders from original (renamed in step 1) into new "HealthFreaks" folder:
+6. Move the following folders from original (renamed in step 1) into new "HealthFreaks" folder. When prompted to update imports, make sure to press "No" in the popup:
     - FireBaseConfig.js
     - App.tsx
     - app (folder)
     - assets (folder)
 7. It is now safe to run: npx expo start
+    - If prompted to install typescript support, press "y" in terminal
