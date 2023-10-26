@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Platform } from "react-native";
+import { View, Text, StyleSheet, Platform, ImageBackground } from "react-native";
 //import GoogleFit, { Scopes } from 'react-native-google-fit';
 
 export default function Dashboard() {
@@ -85,23 +85,25 @@ export default function Dashboard() {
     */
 
     return (
-        <View style={styles.container}>
-            <View style={styles.bubble}>
-                <Text style={{ fontSize: 24, alignSelf: 'center' }}>
-                    {msg}
-                </Text>
-                <View style={{ flexDirection: 'row' }}>
-                    <View style={[styles.container, { alignItems: 'center' }]}>
-                        <Text style={{ fontSize: 20 }}>Steps</Text>
-                        <Text style={{ fontSize: 20 }}>{steps}</Text>
-                    </View>
-                    <View style={[styles.container, { alignItems: 'center' }]}>
-                        <Text style={{ fontSize: 20 }}>Calories</Text>
-                        <Text style={{ fontSize: 20 }}>{calories}</Text>
+        <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={styles.background}>
+            <View style={styles.container}>
+                <View style={styles.bubble}>
+                    <Text style={{ fontSize: 24, alignSelf: 'center' }}>
+                        {msg}
+                    </Text>
+                    <View style={{ flexDirection: 'row' }}>
+                        <View style={[styles.container, { alignItems: 'center' }]}>
+                            <Text style={styles.text}>Steps</Text>
+                            <Text style={styles.text}>{steps}</Text>
+                        </View>
+                        <View style={[styles.container, { alignItems: 'center' }]}>
+                            <Text style={styles.text}>Calories</Text>
+                            <Text style={styles.text}>{calories}</Text>
+                        </View>
                     </View>
                 </View>
             </View>
-        </View>
+        </ImageBackground>
     );
 }
 
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: "column",
-        backgroundColor: '#ecf0f1',
+        backgroundColor: 'transparent', //makes the background image visible
         padding: 8,
     },
     bubble: {
@@ -117,5 +119,19 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 4,
         flexDirection: 'column',
-    }
+        backgroundColor: 'rgba(0, 0, 0, 0.69)',
+        shadowColor: 'deeppink',
+        shadowOffset: { width: 0, height: 0 },
+        shadowRadius: 20,
+    },
+    text: {
+        fontSize: 20,
+        height: 200,
+        width: '100%',
+        color: 'red',
+    },
+    background: {
+        flex: 1,
+        resizeMode: 'cover',
+    },
 });
