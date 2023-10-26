@@ -56,7 +56,7 @@ const Login = () => {
                     <TextInput value={email} style={styles.inputField} placeholder="Email" placeholderTextColor='#999' autoCapitalize='none' onChangeText={(text) => setEmail(text)}></TextInput>
                     <View style={[styles.inputField, { padding: 0 }]}>
                         <TextInput secureTextEntry={hidePassword} value={password} style={styles.inputToggle} placeholder="Password" placeholderTextColor='#999' autoCapitalize='none' onChangeText={(text) => SetPassword(text)}></TextInput>
-                        <Ionicons name={hidePassword ? 'eye-off' : 'eye'} size={32} style={{ alignSelf: 'center', padding: 4 }} onPress={() => { setHidePassword(!hidePassword) }} />
+                        <Ionicons name={hidePassword ? 'eye-off' : 'eye'} size={32} color="white" style={{ alignSelf: 'center', padding: 10 }} onPress={() => { setHidePassword(!hidePassword) }} />
                     </View>
                     {loading ? <ActivityIndicator size="large" color="#0000ff" />
                         : <>
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     flex: 1,
     padding: 10,
+    paddingRight: 13,
     borderRadius: 4,
     borderColor: 'white',
     color: 'violet',
