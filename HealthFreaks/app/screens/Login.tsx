@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: 'white',
     shadowColor: 'rgba(255, 255, 255, 0.9)',
     shadowOffset: { width: 10, height: 0 },
