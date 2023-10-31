@@ -11,6 +11,7 @@
     - npm install @react-navigation/bottom-tabs
     - npm install @react-navigation/native-stack
     - npx expo install firebase
+    - npm install react-native-stopwatch-timer
 6. Move the following folders from original (renamed in step 1) into new "HealthFreaks" folder. When prompted to update imports, make sure to press "No" in the popup:
     - FireBaseConfig.ts
     - App.tsx
