@@ -58,9 +58,9 @@ const Login = () => {
         <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={styles.image}>
           <KeyboardAvoidingView behavior='padding' style={{ marginHorizontal: 20 }}>
             <Text style={styles.title}>Health Freaks</Text>
-            <TextInput value={email} style={styles.inputField} placeholder="Email" placeholderTextColor='#999' autoCapitalize='none' onChangeText={(text) => setEmail(text)}></TextInput>
+            <TextInput keyboardType="email-address" value={email} style={styles.inputField} placeholder="Email" placeholderTextColor='#999' autoCapitalize='none' onChangeText={(text) => setEmail(text)}></TextInput>
             <View style={[styles.inputField, { padding: 0 }]}>
-              <TextInput secureTextEntry={hidePassword} value={password} style={styles.inputToggle} placeholder="Password" placeholderTextColor='#999' autoCapitalize='none' onChangeText={(text) => SetPassword(text)}></TextInput>
+              <TextInput secureTextEntry={hidePassword} keyboardType="ascii-capable" value={password} style={styles.inputToggle} placeholder="Password" placeholderTextColor='#999' autoCapitalize='none' onChangeText={(text) => SetPassword(text)}></TextInput>
               <Ionicons name={hidePassword ? 'eye-off' : 'eye'} size={32} color="white" style={{ alignSelf: 'center', padding: 10 }} onPress={() => { setHidePassword(!hidePassword) }} />
             </View>
             {loading ? <ActivityIndicator size="large" color="#0000ff" />
