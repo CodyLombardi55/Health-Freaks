@@ -4,13 +4,11 @@ import { FIREBASE_AUTH } from '../../FireBaseConfig';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFonts } from 'expo-font';
+import * as Font from 'expo-font';
 
 /* Needed to properly load our custom font */
 const customFonts = {
   'hitMePunk': require('../../assets/fonts/hitMePunk.ttf')
-}
-export async function loadCustomFonts() {
-  await Font.loadAsync(customFonts);
 }
 
 const Login = () => {
@@ -20,6 +18,10 @@ const Login = () => {
     const [hidePassword, setHidePassword] = useState(true); //password entry visibility state
     const auth = FIREBASE_AUTH;
     const [loaded] = useFonts(customFonts); // Load custom fonts using useFonts
+
+    async function loadFonts(){
+      await Font.loadAsync(customFonts);
+    }
 
     const signIn = async () => {
         setLoading(true);
@@ -47,7 +49,7 @@ const Login = () => {
             setLoading(false);
         }
     };
-
+    
     return (
         <View style={styles.container}>
             <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={styles.image}>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Dimensions } from 'react-native';
 import { Stopwatch } from 'react-native-stopwatch-timer';
+
+const screen = Dimensions.get('screen');
 
 export default function App() {
   const [startTimer, setStartTimer] = useState(false);
