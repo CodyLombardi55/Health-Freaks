@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   inputField: {
     marginVertical: 4,
     height: 50,
-    width: '80%',
+    width: '100%',
     marginHorizontal: 'auto',
     borderWidth: 1,
     borderRadius: 4,
