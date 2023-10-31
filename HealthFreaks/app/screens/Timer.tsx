@@ -1,34 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Dimensions } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity } from 'react-native';
+import { Stopwatch } from 'react-native-stopwatch-timer';
 
 export default function App() {
-  const [elapsedSec, setElapsedSec] = useState(0);
-  const [isActive, setIsActive] = useState(false);
+  const [startTimer, setStartTimer] = useState(false);
+  const [resetTimer, setResetTimer] = useState(false);
+  const [time, setTime] = useState(0);
+  //const [timerText, setTimerText] = 
 
-  var interval;
   function toggle() {
-    setIsActive(!isActive);
-
-    if (isActive) {
-      interval = setInterval(() => {
-        setElapsedSec(elapsedSec + 1)
-      }, 1000);
-    } else {
-      clearInterval(interval);
-    }
+    setStartTimer(!startTimer);
+    setResetTimer(false);
   }
-
   function reset() {
-    setElapsedSec(0);
-    setIsActive(false);
+    setStartTimer(false);
+    setResetTimer(true);
   }
+  const options = {     //for timer
+    container: {
+      borderRadius: 5,
+      marginBottom: 20,
+    },
+    text: {
+      fontSize: 60,
+      color: '#FFF',
+      marginLeft: 7,
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" />
-      <Text style={styles.timerText}>{`${elapsedSec}:${elapsedSec}`}</Text>
+      <Stopwatch msecs
+        start={startTimer}
+        reset={resetTimer}
+        options={options}
+      />
       <TouchableOpacity onPress={toggle} style={styles.button}>
-        <Text style={styles.buttonText}>{isActive ? 'Pause' : 'Start'}</Text>
+        <Text style={styles.buttonText}>{startTimer ? 'Pause' : 'Start'}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={reset} style={[styles.button, styles.buttonReset]}>
         <Text style={[styles.buttonText, styles.buttonTextReset]}>Reset</Text>
