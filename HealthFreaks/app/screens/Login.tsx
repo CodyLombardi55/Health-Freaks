@@ -51,7 +51,10 @@ const Login = () => {
     }
   };
 
-  loadFonts();
+  useEffect(() => {
+    loadFonts();
+  }, []);
+  
   if (loaded) {
     return (
       <View style={styles.container}>
