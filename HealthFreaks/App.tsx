@@ -6,7 +6,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { FIREBASE_AUTH } from './FireBaseConfig';
 
-
 /* [Individual pages for app] */
 import Login from './app/screens/Login';
 import Dashboard from './app/screens/Dashboard';
@@ -15,6 +14,7 @@ import BMICalc from './app/screens/BMICalc';
 import Timer from './app/screens/Timer';
 import Settings from './app/screens/Settings';
 import Profile from './app/screens/Profile';
+import Steps from './app/screens/Steps';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -27,6 +27,7 @@ const Main = () => {
       <Tab.Screen name='BMICalc' component={BMICalc} options={{ headerShown: false }} />
       <Tab.Screen name='Timer' component={Timer} />
       <Tab.Screen name='Settings' component={Settings} />
+      <Tab.Screen name='Steps' component={Steps} />
     </Tab.Navigator>
   );
 };
