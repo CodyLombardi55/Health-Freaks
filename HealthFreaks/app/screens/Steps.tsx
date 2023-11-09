@@ -6,53 +6,49 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 
 export default function App() {
     const [PedometerAvailabiity, setPedometerAvailability] = useState("");
-    const [stepCount, updateStepCount] = useState(0);
+    const [currentStepCount, setCurrentStepCount] = useState(0);
 
     useEffect(() => {
+        requestPedometerPermission(); // Request permission when the app starts
         subscribe();
-        requestCameraPermission();
-    }, [])
+    }, []);
 
     const subscribe = () => {
         const subscription = Pedometer.watchStepCount((result) => {
-            updateStepCount(result.steps);
-        })
+            setCurrentStepCount(result.steps);
+        });
 
         Pedometer.isAvailableAsync().then(
             (result) => {
-                setPedometerAvailability(String(result))
+                setPedometerAvailability(String(result));
             },
             (error) => {
-                setPedometerAvailability(error)
+                setPedometerAvailability(error);
             }
         );
     }
 
-    const requestCameraPermission = async () => {
+    const requestPedometerPermission = async () => {
         try {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.CAMERA,
-            {
-              title: 'Cool Photo App Camera Permission',
-              message:
-                'Cool Photo App needs access to your camera ' +
-                'so you can take awesome pictures.',
-              buttonNeutral: 'Ask Me Later',
-              buttonNegative: 'Cancel',
-              buttonPositive: 'OK',
-            },
-          );
-          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            console.log('You can use the camera');
-          } else {
-            console.log('Camera permission denied');
-          }
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACTIVITY_RECOGNITION,
+                {
+                    title: 'Step Counter App Pedometer Permission',
+                    message: 'Step Counter App needs access to your step count data.',
+                    buttonNeutral: 'Ask Me Later',
+                    buttonNegative: 'Cancel',
+                    buttonPositive: 'OK',
+                }
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log('Pedometer permission granted');
+            } else {
+                console.log('Pedometer permission denied');
+            }
         } catch (err) {
-          console.warn(err);
+            console.warn(err);
         }
-      };
-      
-      
+    }
 
     return (
         <View style={styles.container}>
@@ -62,12 +58,11 @@ export default function App() {
                 source={require('../../assets/BACKGROUND.png')}
             >
                 <View style={{ flex: 1, justifyContent: "center" }}>
-                    <Text style={styles.headingDesign}> Step Counter Active :{PedometerAvailabiity}
-                    </Text>
+                    <Text style={styles.headingDesign}> Step Counter Active :{PedometerAvailabiity}</Text>
 
                     <View>
                         <CircularProgress
-                            value={stepCount}
+                            value={currentStepCount}
                             maxValue={6500}
                             radius={210}
                             //textColor={'#ECF0F1'}
