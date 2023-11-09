@@ -10,7 +10,7 @@ function Profile() {
     const [age, setAge] = useState('');
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
-    const [sex, setSex] = useState('');
+    const [sex, setSex] = useState('Other');
     const [metricUnits, setUnits] = useState(true)
 
     const docRef = doc(FIRESTORE_DB, 'users', String(FIREBASE_AUTH.currentUser?.email));
@@ -149,7 +149,7 @@ function Profile() {
                     rowTextForSelection={(item, index) => {
                         return item
                     }}
-                    buttonStyle={styles.inputField}
+                    buttonStyle={[styles.inputField, { width: 'auto' }]}
                     defaultValue={sex}
                 />
             </KeyboardAvoidingView>
