@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, ImageBackground, PermissionsAndroid } from "react-native";
+import { StyleSheet, Text, View, ImageBackground, PermissionsAndroid, Platform } from "react-native";
 import { Pedometer } from 'expo-sensors';
 import CircularProgress from 'react-native-circular-progress-indicator';
 
@@ -9,7 +9,9 @@ export default function App() {
     const [currentStepCount, setCurrentStepCount] = useState(0);
 
     useEffect(() => {
-        requestPedometerPermission(); // Request permission when the app starts
+        if (Platform.OS === 'android') {
+            requestPedometerPermission(); // Request permission when the app starts
+        }
         subscribe();
     }, []);
 
