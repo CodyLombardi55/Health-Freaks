@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, KeyboardAvoidingView, Button, Pressable, TextIn
 import React, { useEffect, useState } from 'react';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIRESTORE_DB } from '../../FireBaseConfig';
+import SelectDropdown from 'react-native-select-dropdown';
 
 function Profile() {
     const [firstName, setFirstName] = useState('');
@@ -136,12 +137,20 @@ function Profile() {
                         <Text style={styles.inputToggle}>{metricUnits ? 'kg' : 'lbs'}</Text>
                     </Pressable>
                 </View>
-                <TextInput
-                    value={sex}
-                    placeholder='Sex'
-                    onChangeText={setSex}
-                    placeholderTextColor={'#999'}
-                    style={styles.inputField}
+                <SelectDropdown
+                    data={['Male', 'Female', 'Other']}
+                    onSelect={(selectedItem, index) => {
+                        console.log(selectedItem, index);
+                        setSex(selectedItem);
+                    }}
+                    buttonTextAfterSelection={(selectedItem, index) => {
+                        return selectedItem
+                    }}
+                    rowTextForSelection={(item, index) => {
+                        return item
+                    }}
+                    buttonStyle={styles.inputField}
+                    defaultValue={sex}
                 />
             </KeyboardAvoidingView>
             <Button
