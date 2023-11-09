@@ -1,68 +1,91 @@
-import React ,{useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, ImageBackground} from "react-native";
+import { StyleSheet, Text, View, ImageBackground, PermissionsAndroid } from "react-native";
 import { Pedometer } from 'expo-sensors';
 import CircularProgress from 'react-native-circular-progress-indicator';
 
-
-
 export default function App() {
-
     const [PedometerAvailabiity, setPedometerAvailability] = useState("");
+    const [stepCount, updateStepCount] = useState(0);
 
-    const[stepCount, updateStepCount] = useState(0)
-
-    useEffect(()=>{
+    useEffect(() => {
         subscribe();
+        requestCameraPermission();
     }, [])
 
-    const subscribe = () =>{
-        const subscription = Pedometer.watchStepCount((result)=>{
+    const subscribe = () => {
+        const subscription = Pedometer.watchStepCount((result) => {
             updateStepCount(result.steps);
         })
 
         Pedometer.isAvailableAsync().then(
             (result) => {
-                setPedometerAvailability(String(result)) 
-            } ,
-            (error)  => {
+                setPedometerAvailability(String(result))
+            },
+            (error) => {
                 setPedometerAvailability(error)
-         }
-       );
+            }
+        );
     }
-    
+
+    const requestCameraPermission = async () => {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            {
+              title: 'Cool Photo App Camera Permission',
+              message:
+                'Cool Photo App needs access to your camera ' +
+                'so you can take awesome pictures.',
+              buttonNeutral: 'Ask Me Later',
+              buttonNegative: 'Cancel',
+              buttonPositive: 'OK',
+            },
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log('You can use the camera');
+          } else {
+            console.log('Camera permission denied');
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+      };
+      
+      
+
     return (
         <View style={styles.container}>
             <ImageBackground
-            style = {{flex:1}}
-            resizeMode='cover'
-            source={require('../../assets/background.jpg')}
+                style={{ flex: 1 }}
+                resizeMode='cover'
+                source={require('../../assets/BACKGROUND.png')}
             >
-<View style = {{flex: 1, justifyContent: "center"}}>
-<Text style = {styles.headingDesign}> Step Counter Active :{PedometerAvailabiity}
-</Text>
+                <View style={{ flex: 1, justifyContent: "center" }}>
+                    <Text style={styles.headingDesign}> Step Counter Active :{PedometerAvailabiity}
+                    </Text>
 
-<View>
-    <CircularProgress
-    value={stepCount}
-    maxValue={6500}
-    radius={210}
-    //textColor={'#ECF0F1'}
-    activeStrokeColor={'#F39C12'}
-    inActiveStrokeColor={'#9B59F9'}
-    inActiveStrokeOpacity={0.5}
-    inActiveStrokeWidth={40}
-    activeStrokeWidth={40}
-    title={"Step Count"}
-    titleColor = {"#ECF0F1"}
-    titleStyle={{fontWeight: "bold"}}
-    />
-</View>
+                    <View>
+                        <CircularProgress
+                            value={stepCount}
+                            maxValue={6500}
+                            radius={210}
+                            //textColor={'#ECF0F1'}
+                            activeStrokeColor={'#F39C12'}
+                            inActiveStrokeColor={'#9B59F9'}
+                            inActiveStrokeOpacity={0.5}
+                            inActiveStrokeWidth={40}
+                            activeStrokeWidth={40}
+                            title={"Step Count"}
+                            titleColor={"#ECF0F1"}
+                            titleStyle={{ fontWeight: "bold" }}
+                        />
+                    </View>
 
-</View>
+                </View>
 
             </ImageBackground>
-            
+
             <StatusBar style="auto" />
         </View>
     )
@@ -71,15 +94,14 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',        
-        
+        backgroundColor: '#fff',
+
     },
-    headingDesign :{
-        color : "white",
-        backgroundColor : 'rgba(155,89,182,0.5)',
+    headingDesign: {
+        color: "white",
+        backgroundColor: 'rgba(155,89,182,0.5)',
         alignSelf: "center",
         fontSize: 15,
         fontWeight: "bold",
-        fontFamily: "Papyrus"
     },
 });

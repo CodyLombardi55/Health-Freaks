@@ -19,6 +19,7 @@
     - npm install react-native-stopwatch-timer
     - npx expo install expo-sensors
     - npm install react-native-circular-progress-indicator
+    - npx expo install react-native-reanimated
 7. Move the following folders from original (renamed in step 1) into new "HealthFreaks" folder. When prompted to update imports, make sure to press "No" in the popup:
     - FireBaseConfig.ts
     - App.tsx
