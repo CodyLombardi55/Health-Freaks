@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, ImageBackground, PermissionsAndroid, Platform } from "react-native";
+import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import { Pedometer } from 'expo-sensors';
 import CircularProgress from 'react-native-circular-progress-indicator';
 
@@ -9,9 +9,6 @@ export default function App() {
     const [currentStepCount, setCurrentStepCount] = useState(0);
 
     useEffect(() => {
-        if (Platform.OS === 'android') {
-            requestPedometerPermission(); // Request permission when the app starts
-        }
         subscribe();
     }, []);
 
@@ -23,33 +20,12 @@ export default function App() {
         Pedometer.isAvailableAsync().then(
             (result) => {
                 setPedometerAvailability(String(result));
+                Pedometer.requestPermissionsAsync();
             },
             (error) => {
                 setPedometerAvailability(error);
             }
         );
-    }
-
-    const requestPedometerPermission = async () => {
-        try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.ACTIVITY_RECOGNITION,
-                {
-                    title: 'Step Counter App Pedometer Permission',
-                    message: 'Step Counter App needs access to your step count data.',
-                    buttonNeutral: 'Ask Me Later',
-                    buttonNegative: 'Cancel',
-                    buttonPositive: 'OK',
-                }
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log('Pedometer permission granted');
-            } else {
-                console.log('Pedometer permission denied');
-            }
-        } catch (err) {
-            console.warn(err);
-        }
     }
 
     return (
