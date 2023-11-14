@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIRESTORE_DB } from '../../FireBaseConfig';
 import SelectDropdown from 'react-native-select-dropdown';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 function Profile() {
     const [firstName, setFirstName] = useState('');
@@ -150,7 +151,12 @@ function Profile() {
                         return item
                     }}
                     buttonStyle={[styles.inputField, { width: 'auto' }]}
+                    buttonTextStyle={{ textAlign: 'left' }}
                     defaultValue={sex}
+                    renderDropdownIcon={isOpened => {
+                        return <Ionicons name={isOpened ? 'caret-up' : 'caret-down'} size={32} />
+                    }}
+                    dropdownIconPosition={'right'}
                 />
                 <Text>Tap cm/in to toggle between Metric and Imperial units</Text>
             </KeyboardAvoidingView>

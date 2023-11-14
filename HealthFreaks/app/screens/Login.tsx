@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, Button, TextInput, KeyboardAvoidingView, ActivityIndicator, ImageBackground, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, KeyboardAvoidingView, ActivityIndicator, ImageBackground, Platform, TouchableOpacity, Modal } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { FIREBASE_AUTH } from '../../FireBaseConfig';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFonts } from 'expo-font';
 import * as Font from 'expo-font';
@@ -18,6 +18,7 @@ const Login = () => {
   const [hidePassword, setHidePassword] = useState(true); //password entry visibility state
   const auth = FIREBASE_AUTH;
   const [loaded, setLoaded] = useState(false); // Load custom fonts using useFonts
+  const [passwordResetVisible, setPasswordResetVisible] = useState(false);
 
   async function loadFonts() {
     await Font.loadAsync(customFonts);
@@ -51,10 +52,21 @@ const Login = () => {
     }
   };
 
+  const resetPassword = async () => {
+    try{
+      sendPasswordResetEmail(auth, email);
+      alert('Password reset link has been sent!');
+    setPasswordResetVisible(false);
+    } catch (error) {
+      console.log(error);
+      alert('Password reset failed: ' + error.message);
+    }
+  }
+
   useEffect(() => {
     loadFonts();
   }, []);
-  
+
   if (loaded) {
     return (
       <View style={styles.container}>
@@ -75,8 +87,32 @@ const Login = () => {
                   <TouchableOpacity style={styles.loginButtons} onPress={signUp}>
                     <Text style={styles.customButtonText}>SIGN UP</Text>
                   </TouchableOpacity>
+                  <TouchableOpacity style={styles.loginButtons} onPress={() => { setPasswordResetVisible(true) }}>
+                    <Text style={styles.customButtonText}>FORGOT PASSWORD</Text>
+                  </TouchableOpacity>
                 </View>
               </>}
+            <Modal
+              visible={passwordResetVisible}
+              onRequestClose={() => { setPasswordResetVisible(false) }}
+              animationType='slide'>
+              <View style={styles.container}>
+                <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={styles.image}>
+                  <View style={{ padding: 20 }}>
+                    <Text style={styles.title}>Enter your email:</Text>
+                    <TextInput keyboardType="email-address" value={email} style={styles.inputField} placeholder="Email" placeholderTextColor='#999' autoCapitalize='none' onChangeText={(text) => setEmail(text)}></TextInput>
+                    <View style={{ marginTop: 32, flexDirection: 'column', rowGap: 10 }}>
+                      <TouchableOpacity style={styles.loginButtons} onPress={resetPassword}>
+                        <Text style={styles.customButtonText}>RESET PASSWORD</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.loginButtons} onPress={() => { setPasswordResetVisible(false) }}>
+                        <Text style={styles.customButtonText}>CANCEL</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </ImageBackground>
+              </View>
+            </Modal>
           </KeyboardAvoidingView>
         </ImageBackground>
       </View>
@@ -137,7 +173,7 @@ const styles = StyleSheet.create({
   loginButtons: {
     borderWidth: 1,
     borderColor: 'white',
-    borderRadius: 4,
+    borderRadius: 40,
     padding: 10,
     shadowColor: 'seagreen',
     shadowOffset: { width: 0, height: 0 },
