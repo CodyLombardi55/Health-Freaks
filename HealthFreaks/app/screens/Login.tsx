@@ -53,10 +53,10 @@ const Login = () => {
   };
 
   const resetPassword = async () => {
-    try{
-      sendPasswordResetEmail(auth, email);
+    try {
+      const response = await sendPasswordResetEmail(auth, email);
       alert('Password reset link has been sent!');
-    setPasswordResetVisible(false);
+      setPasswordResetVisible(false);
     } catch (error) {
       console.log(error);
       alert('Password reset failed: ' + error.message);
