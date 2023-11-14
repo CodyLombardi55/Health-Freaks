@@ -64,6 +64,7 @@ function BMICalc() {
                <Text style={styles.inputToggle}>{metricUnits ? 'kg' : 'lbs'}</Text>
             </Pressable>
          </View>
+         <Text>Tap cm/in to toggle between Metric and Imperial units</Text>
          <TouchableOpacity style={styles.submitButton} onPress={() => { calculate(height, weight); }}>
             <Text style={styles.submitButtonText}> Calculate </Text>
          </TouchableOpacity>

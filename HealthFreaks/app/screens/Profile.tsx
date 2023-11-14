@@ -152,6 +152,7 @@ function Profile() {
                     buttonStyle={[styles.inputField, { width: 'auto' }]}
                     defaultValue={sex}
                 />
+                <Text>Tap cm/in to toggle between Metric and Imperial units</Text>
             </KeyboardAvoidingView>
             <Button
                 title='Save'
