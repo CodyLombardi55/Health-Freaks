@@ -95,7 +95,8 @@ const Login = () => {
             <Modal
               visible={passwordResetVisible}
               onRequestClose={() => { setPasswordResetVisible(false) }}
-              animationType='slide'>
+              animationType='slide'
+            >
               <View style={styles.container}>
                 <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={styles.image}>
                   <View style={{ padding: 20 }}>
@@ -103,7 +104,7 @@ const Login = () => {
                     <TextInput keyboardType="email-address" value={email} style={styles.inputField} placeholder="Email" placeholderTextColor='#999' autoCapitalize='none' onChangeText={(text) => setEmail(text)}></TextInput>
                     <View style={{ marginTop: 32, flexDirection: 'column', rowGap: 10 }}>
                       <TouchableOpacity style={styles.loginButtons} onPress={resetPassword}>
-                        <Text style={styles.customButtonText}>RESET PASSWORD</Text>
+                        <Text style={styles.customButtonText}>SEND RESET LINK</Text>
                       </TouchableOpacity>
                       <TouchableOpacity style={styles.loginButtons} onPress={() => { setPasswordResetVisible(false) }}>
                         <Text style={styles.customButtonText}>CANCEL</Text>
