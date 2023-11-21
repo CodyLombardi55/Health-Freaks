@@ -1,11 +1,21 @@
 import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Platform, ImageBackground } from "react-native";
 //import GoogleFit, { Scopes } from 'react-native-google-fit';
+import { useFonts } from 'expo-font';
+
+/* Needed to properly load our custom font */
+const customFonts = {
+  'streetSoul': require('../../assets/fonts/streetSoul.ttf')
+}
+export async function loadCustomFonts() {
+  await Font.loadAsync(customFonts);
+}
 
 export default function Dashboard() {
     const [steps, setSteps] = useState(0);
     const [calories, setCalories] = useState(0);
     const [msg, setMsg] = useState('default');
+    const [loaded] = useFonts(customFonts); // Load custom fonts using useFonts
 
     /*
     const options = {
@@ -118,6 +128,7 @@ const styles = StyleSheet.create({
         margin: 20,
         borderWidth: 1,
         borderRadius: 4,
+        borderColor: 'white',
         flexDirection: 'column',
         backgroundColor: 'rgba(0, 0, 0, 0.69)',
         shadowColor: 'deeppink',
@@ -125,7 +136,8 @@ const styles = StyleSheet.create({
         shadowRadius: 20,
     },
     text: {
-        fontSize: 20,
+        fontSize: 40,
+        fontFamily: 'streetSoul',
         height: 200,
         width: '100%',
         color: 'red',
