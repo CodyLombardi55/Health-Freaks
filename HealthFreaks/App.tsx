@@ -5,6 +5,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { FIREBASE_AUTH } from './FireBaseConfig';
+import { StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
+
 
 /* [Individual pages for app] */
 import Login from './app/screens/Login';
@@ -22,7 +26,40 @@ const Tab = createBottomTabNavigator();
 
 const Main = () => {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator screenOptions={({ route }) => ({
+      headerShown: false,
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
+
+        if (route.name === 'Dashboard') {
+          iconName = focused
+            ? 'globe'
+            : 'globe-outline';
+        }
+        else if (route.name === 'Graphs') {
+          iconName = focused ? 'analytics' : 'analytics-outline';
+        }
+        else if (route.name === 'BMICalc') {
+          iconName = focused ? 'calculator' : 'calculator-outline';
+        }
+        else if (route.name === 'Timer') {
+          iconName = focused ? 'alarm' : 'alarm-outline';
+        }
+        else if (route.name === 'Settings') {
+          iconName = focused ? 'ios-list' : 'ios-list-outline';
+        }
+
+        // You can return any component that you like here!
+        return <Ionicons name={iconName} size={size} color={color} />;
+      },
+      tabBarActiveTintColor: 'deeppink',
+      tabBarInactiveTintColor: 'cyan',
+      tabBarStyle: { position: 'absolute', borderTopWidth: 0 },
+      tabBarBackground: () => (
+        <BlurView tint="dark" intensity={100} style={StyleSheet.absoluteFill} />
+      ),
+
+    })} >
       <Tab.Screen name='Dashboard' component={Dashboard} />
       <Tab.Screen name='Graphs' component={Graphs} />
       <Tab.Screen name='Settings' component={Settings} />

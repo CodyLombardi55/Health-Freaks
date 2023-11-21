@@ -70,12 +70,12 @@ function Dashboard({ navigation }) {
 export default function Main() {
     return (
         <NavigationContainer independent={true}>
-            <Stack.Navigator>
-                <Stack.Screen
-                    name='Dashboard'
-                    component={Dashboard}
-                    options={{ headerShown: false }}
-                />
+            <Stack.Navigator screenOptions={{
+                headerTransparent: true,
+                headerTitle: '',
+                headerTintColor: '#fff'
+            }}>
+                <Stack.Screen name='Dashboard' component={Dashboard} />
                 <Stack.Screen name='Timer' component={Timer} />
                 <Stack.Screen name='BMICalc' component={BMICalc} />
                 <Stack.Screen name='Steps' component={Steps} />
@@ -105,7 +105,8 @@ const styles = StyleSheet.create({
     bubbleTitle: {
         fontSize: 24,
         alignSelf: 'center',
-        color: 'red'
+        color: 'red',
+        fontFamily: 'streetSoul'
     },
     miniBubble: {
         padding: 10,
@@ -118,6 +119,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         color: 'red',
+        fontFamily: 'streetSoul'
     },
     background: {
         flex: 1,

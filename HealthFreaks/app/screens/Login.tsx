@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { FIREBASE_AUTH } from '../../FireBaseConfig';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useFonts } from 'expo-font';
 import * as Font from 'expo-font';
 
 /* Needed to properly load our custom font */
