@@ -7,6 +7,7 @@ import Timer from './Timer';
 import BMICalc from "./BMICalc";
 import Steps from './Steps';
 import HealthTips from "./HealthTips";
+import Feed from "./Feed";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +40,7 @@ function Dashboard({ navigation }) {
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                     <Pressable
                         style={styles.miniBubble}
-                        onPress={() => { navigation.navigate('HealthTips') }}
+                        onPress={() => { navigation.navigate('Feed') }}
                     >
                         <Text style={styles.bubbleTitle}>Health Tips</Text>
                     </Pressable>
@@ -78,6 +79,7 @@ export default function Main() {
                 <Stack.Screen name='Timer' component={Timer} />
                 <Stack.Screen name='BMICalc' component={BMICalc} />
                 <Stack.Screen name='Steps' component={Steps} />
+                <Stack.Screen name='Feed' component={Feed} />
             </Stack.Navigator>
         </NavigationContainer>
     )
