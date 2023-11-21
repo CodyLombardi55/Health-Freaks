@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react'
-import { View, Text, TouchableOpacity, TextInput, StyleSheet, Pressable } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, Pressable, ImageBackground } from 'react-native'
 
 function BMICalc() {
    const [height, setHeight] = useState('');
@@ -37,94 +37,123 @@ function BMICalc() {
       }
    }
    return (
-      <View style={styles.container}>
-         <Text style={styles.title}>BMI Calculator</Text>
+      <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={styles.background}>
+         <View style={styles.container}>
+            <Text style={styles.title}>bmi calculator</Text>
 
-         <Text style={styles.label}>Height</Text>
-         <View style={[styles.inputField, { padding: 0 }]}>
-            <TextInput style={styles.inputToggle}
-               underlineColorAndroid="transparent"
-               placeholder="Height"
-               placeholderTextColor={'#999'}
-               autoCapitalize="none"
-               onChangeText={setHeight} />
-            <Pressable onPress={() => setUnits(!metricUnits)}>
-               <Text style={styles.inputToggle}>{metricUnits ? 'cm' : 'in'}</Text>
-            </Pressable>
+            <Text style={styles.label}>Height</Text>
+            <View style={[styles.inputField, { padding: 0 }]}>
+               <TextInput style={styles.inputToggle}
+                  underlineColorAndroid="transparent"
+                  placeholder="Height"
+                  placeholderTextColor={'darkblue'}
+                  autoCapitalize="none"
+                  onChangeText={setHeight} />
+               <Pressable onPress={() => setUnits(!metricUnits)}>
+                  <Text style={styles.inputToggle}>{metricUnits ? 'cm' : 'in'}</Text>
+               </Pressable>
+            </View>
+            <Text style={styles.label}>Weight</Text>
+            <View style={[styles.inputField, { padding: 0 }]}>
+               <TextInput style={styles.inputToggle}
+                  underlineColorAndroid="transparent"
+                  placeholder="Weight"
+                  placeholderTextColor={'darkblue'}
+                  autoCapitalize="none"
+                  onChangeText={setWeight} />
+               <Pressable onPress={() => setUnits(!metricUnits)}>
+                  <Text style={styles.inputToggle}>{metricUnits ? 'kg' : 'lbs'}</Text>
+               </Pressable>
+            </View>
+            <TouchableOpacity style={styles.submitButton} onPress={() => { calculate(height, weight); }}>
+               <Text style={styles.submitButtonText}> Calculate </Text>
+            </TouchableOpacity>
+            <Text style={styles.output}>{bmi}</Text>
+            <Text style={styles.resultText}>{bmiResult}</Text>
          </View>
-         <Text style={styles.label}>Weight</Text>
-         <View style={[styles.inputField, { padding: 0 }]}>
-            <TextInput style={styles.inputToggle}
-               underlineColorAndroid="transparent"
-               placeholder="Weight"
-               placeholderTextColor={'#999'}
-               autoCapitalize="none"
-               onChangeText={setWeight} />
-            <Pressable onPress={() => setUnits(!metricUnits)}>
-               <Text style={styles.inputToggle}>{metricUnits ? 'kg' : 'lbs'}</Text>
-            </Pressable>
-         </View>
-         <TouchableOpacity style={styles.submitButton} onPress={() => { calculate(height, weight); }}>
-            <Text style={styles.submitButtonText}> Calculate </Text>
-         </TouchableOpacity>
-         <Text style={styles.output}>{bmi}</Text>
-         <Text style={styles.resultText}>{bmiResult}</Text>
-      </View>
+      </ImageBackground>
    )
 }
 export default BMICalc;
 
 const styles = StyleSheet.create({
    container: {
+      flex: 1,
       paddingTop: 23,
       marginHorizontal: 20,
       rowGap: 8,
    },
+   background: {
+      flex: 1,
+      resizeMode: 'cover',
+  },
    inputField: {
       //margin: 15,
       //height: 40,
       borderWidth: 1,
+      borderColor: 'white',
+      shadowColor: 'royalblue',
+      shadowOffset: { width: 0, height: 0 },
+      shadowRadius: 20,
       padding: 10,
       flexDirection: 'row',
       fontSize: 20,
+      fontFamily: 'monospace',
+      Color: 'darkgreen',
    },
    inputToggle: {
       flex: 1,
       padding: 10,
       fontSize: 20,
+      color: 'royalblue',
+      fontFamily: 'monospace',
+      backgroundColor: 'rgba(0, 0, 0, .69)',
    },
-   submitButton: {
-      backgroundColor: '#ff6666',
+   submitButton: { //button itself
+      backgroundColor: 'rgba(0, 0, 0, .69)',
+      borderWidth: 1,
+      borderColor: 'white',
+      shadowColor: 'violet',
+      shadowOffset: { width: 0, height: 0 },
+      shadowRadius: 20,
       padding: 10,
       marginVertical: 15,
       height: 40,
    },
-   submitButtonText: {
+   submitButtonText: { //"Calculate txt"
       textAlign: "center",
-      color: 'white',
+      color: 'orchid',
+      fontFamily: 'streetSoul',
       // fontWeight:"bold",
-      fontSize: 18,
+      fontSize: 25,
    },
-   output: {
+   output: { //BMI Output
       textAlign: "center",
       fontSize: 30,
+      color: 'yellow',
+      fontFamily: 'streetSoul',
    },
-   title: {
+   title: { //" BMI Calculator "
       paddingTop: 30,
       paddingBottom: 10,
       textAlign: "center",
-      fontSize: 30,
+      fontSize: 40,
       fontWeight: "bold",
+      color: "limegreen",
+      fontFamily: 'hitMePunk'
    },
-   resultText: {
+   resultText: { //" OBESE txt lol"
       paddingTop: 20,
       paddingBottom: 10,
       textAlign: "center",
       fontSize: 30,
-      color: 'blue'
+      color: 'cyan',
+      fontFamily: 'hitMePunk',
    },
-   label: {
+   label: { //Height/Weight labels
       //marginLeft: 15,
-      fontSize: 20,
+      fontSize: 30,
+      color: 'lime',
+      fontFamily: 'streetSoul',
    }
 })
