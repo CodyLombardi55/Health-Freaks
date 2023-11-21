@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Timer from './Timer';
 import BMICalc from "./BMICalc";
 import Steps from './Steps';
+import HealthTips from "./HealthTips";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,7 +37,10 @@ function Dashboard({ navigation }) {
                     </Pressable>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                    <Pressable style={styles.miniBubble}>
+                    <Pressable
+                        style={styles.miniBubble}
+                        onPress={() => { navigation.navigate('HealthTips') }}
+                    >
                         <Text style={styles.bubbleTitle}>Health Tips</Text>
                     </Pressable>
                     <Pressable style={styles.miniBubble}>
