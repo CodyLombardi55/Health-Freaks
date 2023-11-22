@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: 'white',
     shadowColor: 'rgba(255, 255, 255, 0.9)',
     shadowOffset: { width: 10, height: 0 },
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   inputField: {
     marginVertical: 4,
     height: 50,
-    width: '80%',
+    width: '100%',
     marginHorizontal: 'auto',
     borderWidth: 1,
     borderRadius: 4,
@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
     shadowColor: 'violet',
     shadowOffset: { width: 0, height: 0 },
     shadowRadius: 20,
+    alignSelf: 'center'
   },
   inputToggle: {
     fontSize: 20,
