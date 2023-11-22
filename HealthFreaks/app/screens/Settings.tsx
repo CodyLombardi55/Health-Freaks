@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet, ImageBackground, Pressable, TouchableOpacity} from 'react-native';
+import { View, Text, Button, StyleSheet, ImageBackground, Pressable, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { NavigationProp } from '@react-navigation/native';
 import { FIREBASE_AUTH } from '../../FireBaseConfig';
@@ -12,7 +12,7 @@ const Settings = ({ navigation }: RouterProps) => {
         <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={styles.background}>
             <View style={styles.container}>
                 <TouchableOpacity style={styles.menuBtn} onPress={() => navigation.navigate('Profile Settings')}>
-                    <Text style={styles.buttonText}> Settings </Text>
+                    <Text style={styles.buttonText}> Profile Settings </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.menuBtn} onPress={() => FIREBASE_AUTH.signOut()}>
                     <Text style={styles.buttonText}> Logout </Text>

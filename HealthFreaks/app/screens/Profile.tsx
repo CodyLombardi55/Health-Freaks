@@ -2,6 +2,8 @@ import { View, Text, StyleSheet, KeyboardAvoidingView, Button, Pressable, TextIn
 import React, { useEffect, useState } from 'react';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIRESTORE_DB } from '../../FireBaseConfig';
+import SelectDropdown from 'react-native-select-dropdown';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 function Profile() {
     const [firstName, setFirstName] = useState('');
@@ -9,7 +11,7 @@ function Profile() {
     const [age, setAge] = useState('');
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
-    const [sex, setSex] = useState('');
+    const [sex, setSex] = useState('Other');
     const [metricUnits, setUnits] = useState(true)
 
     const docRef = doc(FIRESTORE_DB, 'users', String(FIREBASE_AUTH.currentUser?.email));
@@ -136,13 +138,27 @@ function Profile() {
                         <Text style={styles.inputToggle}>{metricUnits ? 'kg' : 'lbs'}</Text>
                     </Pressable>
                 </View>
-                <TextInput
-                    value={sex}
-                    placeholder='Sex'
-                    onChangeText={setSex}
-                    placeholderTextColor={'#999'}
-                    style={styles.inputField}
+                <SelectDropdown
+                    data={['Male', 'Female', 'Other']}
+                    onSelect={(selectedItem, index) => {
+                        console.log(selectedItem, index);
+                        setSex(selectedItem);
+                    }}
+                    buttonTextAfterSelection={(selectedItem, index) => {
+                        return selectedItem
+                    }}
+                    rowTextForSelection={(item, index) => {
+                        return item
+                    }}
+                    buttonStyle={[styles.inputField, { width: 'auto' }]}
+                    buttonTextStyle={{ textAlign: 'left' }}
+                    defaultValue={sex}
+                    renderDropdownIcon={isOpened => {
+                        return <Ionicons name={isOpened ? 'caret-up' : 'caret-down'} size={32} />
+                    }}
+                    dropdownIconPosition={'right'}
                 />
+                <Text>Tap cm/in to toggle between Metric and Imperial units</Text>
             </KeyboardAvoidingView>
             <Button
                 title='Save'

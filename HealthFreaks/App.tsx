@@ -5,10 +5,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { FIREBASE_AUTH } from './FireBaseConfig';
-import { Text, View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
-
 
 
 /* [Individual pages for app] */
@@ -19,7 +18,8 @@ import BMICalc from './app/screens/BMICalc';
 import Timer from './app/screens/Timer';
 import Settings from './app/screens/Settings';
 import Profile from './app/screens/Profile';
-import { transform } from 'typescript';
+import Steps from './app/screens/Steps';
+import Feed from './app/screens/Feed';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -27,8 +27,8 @@ const Tab = createBottomTabNavigator();
 const Main = () => {
 
   return (
-    <Tab.Navigator
-    screenOptions={({ route }) => ({
+    <Tab.Navigator screenOptions={({ route }) => ({
+      headerShown: false,
       tabBarIcon: ({ focused, color, size }) => {
         let iconName;
 
@@ -36,7 +36,7 @@ const Main = () => {
           iconName = focused
             ? 'globe'
             : 'globe-outline';
-        } 
+        }
         else if (route.name === 'Graphs') {
           iconName = focused ? 'analytics' : 'analytics-outline';
         }
@@ -55,18 +55,15 @@ const Main = () => {
       },
       tabBarActiveTintColor: 'deeppink',
       tabBarInactiveTintColor: 'cyan',
-      tabBarStyle: { position: 'absolute', borderTopWidth:0 },
+      tabBarStyle: { position: 'absolute', borderTopWidth: 0 },
       tabBarBackground: () => (
         <BlurView tint="dark" intensity={100} style={StyleSheet.absoluteFill} />
       ),
 
-    })}
-  >
-      <Tab.Screen name='Dashboard' component={Dashboard} options={{ headerShown: false }} />
-      <Tab.Screen name='Graphs' component={Graphs} options={{ headerShown: false }} />
-      <Tab.Screen name='BMICalc' component={BMICalc} options={{ headerShown: false }} />
-      <Tab.Screen name='Timer' component={Timer} options={{ headerShown: false }} />
-      <Tab.Screen name='Settings' component={Settings} options={{ headerShown: false }} />
+    })} >
+      <Tab.Screen name='Dashboard' component={Dashboard} />
+      <Tab.Screen name='Graphs' component={Graphs} />
+      <Tab.Screen name='Settings' component={Settings} />
     </Tab.Navigator>
   );
 };
