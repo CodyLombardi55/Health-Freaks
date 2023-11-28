@@ -79,27 +79,9 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login' screenOptions={{headerTintColor: 'red', headerBackground: () => (<BlurView tint="dark" intensity={100} style={StyleSheet.absoluteFill} />
-            ),}}>
-        {user ? (
-        <Stack.Screen name='Home' component={Main} options={{ headerShown: false }} />
-        ) : (
-          <Stack.Screen
-          name='Login'
-          component={Login}
-          options={{
-            headerShown: false,
-          }}
-        />
-      )}
-      <Stack.Screen
-          name='Profile Settings'
-          component={Profile}
-          options={{
-            title: 'Profile Settings',
-          }}
-        />
+      <Stack.Navigator initialRouteName='Login'>
+        {user ? <Stack.Screen name='Home' component={Main} options={{ headerShown: false }} /> : <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />}
+        <Stack.Screen name='Profile Settings' component={Profile} />
       </Stack.Navigator>
     </NavigationContainer>
-  );
-}
+  );}

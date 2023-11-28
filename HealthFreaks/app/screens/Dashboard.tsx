@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
         margin: 20,
         borderWidth: 1,
         borderRadius: 4,
-        borderColor: 'white',
         flexDirection: 'column',
         backgroundColor: 'rgba(0, 0, 0, 0.69)',
         shadowColor: 'deeppink',
