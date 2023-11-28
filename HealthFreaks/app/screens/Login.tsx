@@ -7,8 +7,13 @@ import * as Font from 'expo-font';
 
 /* Needed to properly load our custom font */
 const customFonts = {
-  'hitMePunk': require('../../assets/fonts/hitMePunk.ttf')
+  'hitMePunk': require('../../assets/fonts/hitMePunk.ttf'),
+  'streetSoul': require('../../assets/fonts/streetSoul.ttf')
 }
+export async function loadCustomFonts() {
+    await Font.loadAsync(customFonts);
+}
+
 
 const Login = () => {
   const [email, setEmail] = useState('');         //email text entry current state
@@ -189,4 +194,3 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
-

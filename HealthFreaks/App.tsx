@@ -26,6 +26,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const Main = () => {
+
   return (
     <Tab.Navigator screenOptions={({ route }) => ({
       headerShown: false,
@@ -69,7 +70,6 @@ const Main = () => {
   );
 };
 
-
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
 
@@ -86,6 +86,4 @@ export default function App() {
         <Stack.Screen name='Profile Settings' component={Profile} />
       </Stack.Navigator>
     </NavigationContainer>
-  );
-}
-
+  );}
