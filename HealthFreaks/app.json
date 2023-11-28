@@ -24,8 +24,11 @@
       },
       "permissions": [
         "android.permission.ACTIVITY_RECOGNITION",
-        "com.google.android.gms.permission.ACTIVITY_RECOGNITION"
-      ]
+        "com.google.activity.segment",
+        "android.permission.TYPE_STEP_COUNT_CADENCE",
+        "com.google.step_count.cadence"
+      ],
+      "package": "com.healthfreaksdev.HealthFreaks"
     },
     "web": {
       "favicon": "./assets/favicon.png"
