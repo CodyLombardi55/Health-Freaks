@@ -16,7 +16,7 @@ import Timer from './Timer';
 import BMICalc from "./BMICalc";
 import Steps from './Steps';
 import HealthTips from "./HealthTips";
-import Feed from "./Feed";
+import Feed from "./Feed2";
 
 const Stack = createNativeStackNavigator();
 
