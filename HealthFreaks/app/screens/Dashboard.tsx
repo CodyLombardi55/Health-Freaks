@@ -25,7 +25,7 @@ function Dashboard({ navigation }) {
     const [steps, setSteps] = useState(0);
     const [calories, setCalories] = useState(0);
 
-    
+    /*
     useEffect(() => {
         loadCustomFonts();
         const options = {
@@ -48,7 +48,7 @@ function Dashboard({ navigation }) {
                 console.log("AUTH_ERROR");
             })
     }, []);
-    
+    */
 
     return (
         <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={styles.background}>
