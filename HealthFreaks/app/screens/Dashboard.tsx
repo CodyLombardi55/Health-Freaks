@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Platform, ImageBackground, Pressable } from "re
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Font from 'expo-font';
-import googleFit, { Scopes } from "react-native-google-fit";
+import GoogleFit, { Scopes } from "react-native-google-fit";
 
 /* Needed to properly load our custom font */
 const customFonts = {
@@ -25,7 +25,7 @@ function Dashboard({ navigation }) {
     const [steps, setSteps] = useState(0);
     const [calories, setCalories] = useState(0);
 
-    /*
+    
     useEffect(() => {
         loadCustomFonts();
         const options = {
@@ -36,19 +36,19 @@ function Dashboard({ navigation }) {
                 Scopes.FITNESS_BODY_WRITE,
             ],
         }
-        googleFit.authorize(options)
+        GoogleFit.authorize(options)
             .then(authResult => {
                 if (authResult.success) {
                     console.log("AUTH_SUCCESS");
                 } else {
-                    console.log("AUTH_DENIED", authResult.message);
+                    console.log("AUTH_DENIED", authResult);
                 }
             })
             .catch(() => {
                 console.log("AUTH_ERROR");
             })
     }, []);
-    */
+    
 
     return (
         <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={styles.background}>
