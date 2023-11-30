@@ -64,7 +64,6 @@ const Main = () => {
       <Tab.Screen name='Dashboard' component={Dashboard} />
       <Tab.Screen name='Graphs' component={Graphs} />
       <Tab.Screen name='Settings' component={Settings} />
-      <Tab.Screen name='Feed2' component={Feed2} />
     </Tab.Navigator>
   );
 };
