@@ -21,6 +21,7 @@ import Profile from './app/screens/Profile';
 import Steps from './app/screens/Steps';
 import Feed from './app/screens/Feed';
 import Feed2 from './app/screens/Feed2';
+import FreeWorkouts from './app/screens/FreeWorkouts';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -66,6 +67,7 @@ const Main = () => {
       <Tab.Screen name='Graphs' component={Graphs} />
       <Tab.Screen name='Settings' component={Settings} />
       <Tab.Screen name='Feed2' component={Feed2} />
+      <Tab.Screen name='Free Workouts' component={FreeWorkouts} />
     </Tab.Navigator>
   );
 };
