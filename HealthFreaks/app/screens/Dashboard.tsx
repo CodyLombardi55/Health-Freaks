@@ -1,16 +1,7 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Platform, ImageBackground, Pressable } from "react-native";
+import { View, Text, StyleSheet, ImageBackground, Pressable } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as Font from 'expo-font';
-
-/* Needed to properly load our custom font */
-const customFonts = {
-    'streetSoul': require('../../assets/fonts/streetSoul.ttf')
-}
-export async function loadCustomFonts() {
-    await Font.loadAsync(customFonts);
-}
 
 import Timer from './Timer';
 import BMICalc from "./BMICalc";
@@ -23,13 +14,14 @@ const Stack = createNativeStackNavigator();
 function Dashboard({ navigation }) {
     const [steps, setSteps] = useState(0);
     const [calories, setCalories] = useState(0);
-
-    useEffect(() => {
-        loadCustomFonts();
-    }, []);
+    const assets = {
+        'hitMePunk': require('../../assets/fonts/hitMePunk.ttf'),
+        'streetSoul': require('../../assets/fonts/streetSoul.ttf'),
+        'background': require('../../assets/BACKGROUND.png')
+    }
 
     return (
-        <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={styles.background}>
+        <ImageBackground source={assets.background} resizeMode='cover' style={styles.background}>
             <View style={[styles.container, { marginTop: 40, flex: 0 }]}>
                 <View style={styles.bubble}>
                     <Pressable
