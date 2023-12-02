@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#07121B',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
   },
   button: {
     borderWidth: 10,

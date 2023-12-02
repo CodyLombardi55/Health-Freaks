@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Platform, ImageBackground, Pressable } from "re
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Font from 'expo-font';
-import GoogleFit, { Scopes } from "react-native-google-fit";
 
 /* Needed to properly load our custom font */
 const customFonts = {
@@ -31,7 +30,7 @@ function Dashboard({ navigation }) {
 
     return (
         <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={styles.background}>
-            <View style={styles.container}>
+            <View style={[styles.container, { marginTop: 40, flex: 0 }]}>
                 <View style={styles.bubble}>
                     <Pressable
                         onPress={() => { navigation.navigate('Steps') }}
@@ -51,6 +50,8 @@ function Dashboard({ navigation }) {
                         </View>
                     </Pressable>
                 </View>
+            </View>
+            <View style={[styles.container, styles.centerButtons]}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                     <Pressable
                         style={styles.miniBubble}
@@ -62,7 +63,7 @@ function Dashboard({ navigation }) {
                         <Text style={styles.bubbleTitle}>Graphs</Text>
                     </Pressable>
                 </View>
-                <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                     <Pressable
                         style={styles.miniBubble}
                         onPress={() => { navigation.navigate('BMICalc') }}
@@ -77,7 +78,7 @@ function Dashboard({ navigation }) {
                     </Pressable>
                 </View>
             </View>
-        </ImageBackground>
+        </ImageBackground >
     );
 }
 
@@ -129,14 +130,19 @@ const styles = StyleSheet.create({
         shadowColor: 'deeppink',
         shadowOffset: { width: 0, height: 0 },
         shadowRadius: 20,
+        minWidth: 150
     },
     text: {
         fontSize: 20,
         color: 'red',
-        fontFamily: 'streetSoul'
+        fontFamily: 'streetSoul',
     },
     background: {
         flex: 1,
         resizeMode: 'cover',
     },
+    centerButtons: {
+        marginTop: 128,
+        justifyContent: 'space-evenly'
+    }
 });

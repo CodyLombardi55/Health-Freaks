@@ -21,6 +21,7 @@ import Profile from './app/screens/Profile';
 import Steps from './app/screens/Steps';
 import Feed from './app/screens/Feed';
 import Feed2 from './app/screens/Feed2';
+import ManualInput from './app/screens/ManualInput';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -49,6 +50,9 @@ const Main = () => {
         else if (route.name === 'Settings') {
           iconName = focused ? 'ios-list' : 'ios-list-outline';
         }
+        else if (route.name === 'Input') {
+          iconName = focused ? 'add' : 'add-outline';
+        }
 
         // You can return any component that you like here!
         return <Ionicons name={iconName} size={size} color={color} />;
@@ -63,6 +67,7 @@ const Main = () => {
     })} >
       <Tab.Screen name='Dashboard' component={Dashboard} />
       <Tab.Screen name='Graphs' component={Graphs} />
+      <Tab.Screen name='Input' component={ManualInput} />
       <Tab.Screen name='Settings' component={Settings} />
     </Tab.Navigator>
   );
