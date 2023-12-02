@@ -52,6 +52,7 @@ export default function ManualInput() {
                                 onChangeText={onChangeNumber}
                                 value={number}
                                 placeholder='Steps walked'
+                                placeholderTextColor='gray'
                                 keyboardType='numeric'
                             />
                         </KeyboardAvoidingView>
@@ -69,19 +70,18 @@ export default function ManualInput() {
                     animationType='fade'
                     transparent={true}
                 >
-                    <View style={styles.modal}>
+                    <KeyboardAvoidingView style={styles.modal}>
                         <View style={{ flex: 1 }}>
                             <Text style={styles.title}>Enter Distance Walked</Text>
                         </View>
-                        <KeyboardAvoidingView style={{ flex: 1 }}>
-                            <TextInput
-                                style={[styles.text, styles.input]}
-                                onChangeText={onChangeNumber}
-                                value={number}
-                                placeholder='Distance walked'
-                                keyboardType='numeric'
-                            />
-                        </KeyboardAvoidingView>
+                        <TextInput
+                            style={[styles.text, styles.input]}
+                            onChangeText={onChangeNumber}
+                            value={number}
+                            placeholder='Distance walked'
+                            placeholderTextColor='gray'
+                            keyboardType='numeric'
+                        />
                         <Pressable style={[styles.bubble, styles.bubbleBlue]} onPress={() => setMetricUnits(!metricUnits)}>
                             <Text style={styles.text}>Metric unit toggle: {metricUnits ? 'km' : 'mi'}</Text>
                         </Pressable>
@@ -91,7 +91,7 @@ export default function ManualInput() {
                         <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { setDistVisible(false) }}>
                             <Text style={styles.text}>Cancel</Text>
                         </Pressable>
-                    </View>
+                    </KeyboardAvoidingView>
                 </Modal>
                 <Modal
                     visible={calVisible}
@@ -109,6 +109,7 @@ export default function ManualInput() {
                                 onChangeText={onChangeNumber}
                                 value={number}
                                 placeholder='Calories consumed'
+                                placeholderTextColor='gray'
                                 keyboardType='numeric'
                             />
                         </KeyboardAvoidingView>
@@ -196,7 +197,6 @@ const styles = StyleSheet.create({
         rowGap: 16
     },
     input: {
-        color: 'gray',
         backgroundColor: 'black',
         padding: 10,
         borderRadius: 8,
@@ -205,6 +205,6 @@ const styles = StyleSheet.create({
         shadowColor: 'violet',
         shadowOffset: { width: 0, height: 0 },
         shadowRadius: 20,
-        rowGap: 16
+        minHeight: 'auto'
     }
 })

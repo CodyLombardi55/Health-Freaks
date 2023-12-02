@@ -14,20 +14,14 @@ import { BlurView } from 'expo-blur';
 import Login from './app/screens/Login';
 import Dashboard from './app/screens/Dashboard';
 import Graphs from './app/screens/Graphs';
-import BMICalc from './app/screens/BMICalc';
-import Timer from './app/screens/Timer';
 import Settings from './app/screens/Settings';
 import Profile from './app/screens/Profile';
-import Steps from './app/screens/Steps';
-import Feed from './app/screens/Feed';
-import Feed2 from './app/screens/Feed2';
 import ManualInput from './app/screens/ManualInput';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const Main = () => {
-
+const TabBar = () => {
   return (
     <Tab.Navigator screenOptions={({ route }) => ({
       headerShown: false,
@@ -64,7 +58,6 @@ const Main = () => {
       tabBarBackground: () => (
         <BlurView tint="dark" intensity={100} style={StyleSheet.absoluteFill} />
       ),
-
     })} >
       <Tab.Screen name='Dashboard' component={Dashboard} />
       <Tab.Screen name='Graphs' component={Graphs} />
@@ -76,6 +69,11 @@ const Main = () => {
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
+  const assets = {
+    'hitMePunk': require('./assets/fonts/hitMePunk.ttf'),
+    'streetSoul': require('./assets/fonts/streetSoul.ttf'),
+    'background': require('./assets/BACKGROUND.png')
+  }
 
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
@@ -85,26 +83,13 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login' screenOptions={{headerTintColor: 'red', headerBackground: () => (<BlurView tint="dark" intensity={100} style={StyleSheet.absoluteFill} />
-            ),}}>
+      <Stack.Navigator initialRouteName='Login'>
         {user ? (
-        <Stack.Screen name='Home' component={Main} options={{ headerShown: false }} />
+          <Stack.Screen name='Home' component={TabBar} options={{ headerShown: false }} />
         ) : (
-          <Stack.Screen
-          name='Login'
-          component={Login}
-          options={{
-            headerShown: false,
-          }}
-        />
-      )}
-      <Stack.Screen
-          name='Profile Settings'
-          component={Profile}
-          options={{
-            title: 'Profile Settings',
-          }}
-        />
+          <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+        )}
+        <Stack.Screen name='Profile Settings' component={Profile} options={{ title: 'Profile Settings' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
