@@ -11,16 +11,11 @@
 6. Run the following commands (still inside integrated terminal):
     - npx expo install @react-native-async-storage/async-storage
     - npx expo install react-native-screens react-native-safe-area-context
-    - npx expo install expo-font
+    - npx expo install expo-font expo-sensors expo-blur firebase react-native-reanimated
     - npm install @react-navigation/native
     - npm install @react-navigation/bottom-tabs
     - npm install @react-navigation/native-stack
-    - npx expo install firebase
-    - npm install react-native-stopwatch-timer
-    - npx expo install expo-sensors
-    - npm install react-native-circular-progress-indicator
-    - npx expo install react-native-reanimated
-    - npm i react-native-select-dropdown
+    - npm install react-native-stopwatch-timer react-native-circular-progress-indicator react-native-select-dropdown react-native-rss-parser
 7. Move the following folders from original (renamed in step 1) into new "HealthFreaks" folder. When prompted to update imports, make sure to press "No" in the popup:
     - FireBaseConfig.ts
     - App.tsx
