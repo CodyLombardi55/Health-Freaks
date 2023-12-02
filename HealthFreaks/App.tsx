@@ -8,6 +8,7 @@ import { FIREBASE_AUTH } from './FireBaseConfig';
 import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
+import { useFonts } from 'expo-font';
 
 
 /* [Individual pages for app] */
@@ -69,28 +70,34 @@ const TabBar = () => {
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
-  const assets = {
+  const [loginState, setLoginState] = useState(false);
+  const [fontsLoaded] = useFonts({
     'hitMePunk': require('./assets/fonts/hitMePunk.ttf'),
-    'streetSoul': require('./assets/fonts/streetSoul.ttf'),
-    'background': require('./assets/BACKGROUND.png')
-  }
+    'streetSoul': require('./assets/fonts/streetSoul.ttf')
+  });
 
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
-      setUser(user);
+      if (user) {
+        console.log('USER STILL LOGGED IN: ', user.email);
+        setUser(user);
+        setLoginState(true);
+      } else {
+        console.log('No user logged in');
+        setLoginState(true);
+      }
     });
-  }, []);
+  }, [user]);
 
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login'>
-        {user ? (
+  if (loginState && fontsLoaded) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName={user ? 'Home' : 'Login'}>
           <Stack.Screen name='Home' component={TabBar} options={{ headerShown: false }} />
-        ) : (
           <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
-        )}
-        <Stack.Screen name='Profile Settings' component={Profile} options={{ title: 'Profile Settings' }} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+          <Stack.Screen name='Profile Settings' component={Profile} options={{ title: 'Profile Settings' }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
 }

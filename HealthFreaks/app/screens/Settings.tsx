@@ -14,7 +14,7 @@ const Settings = ({ navigation }: RouterProps) => {
                 <TouchableOpacity style={styles.menuBtn} onPress={() => navigation.navigate('Profile Settings')}>
                     <Text style={styles.buttonText}> Profile Settings </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.menuBtn} onPress={() => FIREBASE_AUTH.signOut()}>
+                <TouchableOpacity style={styles.menuBtn} onPress={() => { FIREBASE_AUTH.signOut(); navigation.navigate('Login'); }}>
                     <Text style={styles.buttonText}> Logout </Text>
                 </TouchableOpacity>
 

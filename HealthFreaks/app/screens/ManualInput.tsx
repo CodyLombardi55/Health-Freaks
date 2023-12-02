@@ -4,6 +4,7 @@ import { View, StyleSheet, Pressable, ImageBackground, Text, Modal, KeyboardAvoi
 export default function ManualInput() {
     const assets = {
         'hitMePunk': require('../../assets/fonts/hitMePunk.ttf'),
+        'streetSoul': require('../../assets/fonts/streetSoul.ttf'),
         'background': require('../../assets/BACKGROUND.png')
     }
 
@@ -38,7 +39,7 @@ export default function ManualInput() {
 
                 <Modal
                     visible={stepsVisible}
-                    onRequestClose={() => { setStepsVisible(false) }}
+                    onRequestClose={() => { onChangeNumber(''); setStepsVisible(false) }}
                     animationType='fade'
                     transparent={true}
                 >
@@ -59,14 +60,14 @@ export default function ManualInput() {
                         <Pressable style={styles.bubble} onPress={() => { console.log(number); onChangeNumber(''); setStepsVisible(false) }}>
                             <Text style={styles.text}>Enter</Text>
                         </Pressable>
-                        <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { setStepsVisible(false) }}>
+                        <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { onChangeNumber(''); setStepsVisible(false) }}>
                             <Text style={styles.text}>Cancel</Text>
                         </Pressable>
                     </View>
                 </Modal>
                 <Modal
                     visible={distVisible}
-                    onRequestClose={() => { setDistVisible(false) }}
+                    onRequestClose={() => { onChangeNumber(''); setDistVisible(false) }}
                     animationType='fade'
                     transparent={true}
                 >
@@ -88,14 +89,14 @@ export default function ManualInput() {
                         <Pressable style={styles.bubble} onPress={() => { console.log(number); onChangeNumber(''); setDistVisible(false) }}>
                             <Text style={styles.text}>Enter</Text>
                         </Pressable>
-                        <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { setDistVisible(false) }}>
+                        <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { onChangeNumber(''); setDistVisible(false) }}>
                             <Text style={styles.text}>Cancel</Text>
                         </Pressable>
                     </KeyboardAvoidingView>
                 </Modal>
                 <Modal
                     visible={calVisible}
-                    onRequestClose={() => { setCalVisible(false) }}
+                    onRequestClose={() => { onChangeNumber(''); setCalVisible(false) }}
                     animationType='fade'
                     transparent={true}
                 >
@@ -116,7 +117,7 @@ export default function ManualInput() {
                         <Pressable style={styles.bubble} onPress={() => { console.log(number); onChangeNumber(''); setCalVisible(false) }}>
                             <Text style={styles.text}>Enter</Text>
                         </Pressable>
-                        <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { setCalVisible(false) }}>
+                        <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { onChangeNumber(''); setCalVisible(false) }}>
                             <Text style={styles.text}>Cancel</Text>
                         </Pressable>
                     </View>
@@ -171,8 +172,8 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 20,
-        color: 'white',
-        //fontFamily: 'hitMePunk'
+        color: 'deeppink',
+        //fontFamily: 'streetSoul', //a bit too hard to read, but front-end's choice on enabling
         textAlign: 'center'
     },
     title: {

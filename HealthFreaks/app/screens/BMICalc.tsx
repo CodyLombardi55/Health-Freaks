@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Pressable, ImageBackground } from 'react-native'
 
 function BMICalc() {
@@ -48,6 +48,7 @@ function BMICalc() {
                   placeholder="Height"
                   placeholderTextColor={'darkblue'}
                   autoCapitalize="none"
+                  keyboardType='numeric'
                   onChangeText={setHeight} />
                <Pressable onPress={() => setUnits(!metricUnits)}>
                   <Text style={styles.inputToggle}>{metricUnits ? 'cm' : 'in'}</Text>
@@ -60,6 +61,7 @@ function BMICalc() {
                   placeholder="Weight"
                   placeholderTextColor={'darkblue'}
                   autoCapitalize="none"
+                  keyboardType='numeric'
                   onChangeText={setWeight} />
                <Pressable onPress={() => setUnits(!metricUnits)}>
                   <Text style={styles.inputToggle}>{metricUnits ? 'kg' : 'lbs'}</Text>
@@ -139,7 +141,7 @@ const styles = StyleSheet.create({
       paddingBottom: 10,
       textAlign: "center",
       fontSize: 40,
-      fontWeight: "bold",
+      //fontWeight: "bold", //hitmepunk has no bold version, so commented out for now
       color: "limegreen",
       fontFamily: 'hitMePunk'
    },
