@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Pressable, ImageBackground, Text, Modal, KeyboardAvoidingView, TextInput } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ManualInput() {
     const assets = {
@@ -18,6 +19,37 @@ export default function ManualInput() {
     // metric unit toggle
     // TODO: sync with user settings
     const [metricUnits, setMetricUnits] = useState(true);
+
+    // save number data to local storage
+    const storeData = async (key: string, value: number, reset: boolean = false) => {
+        try {
+            if (reset) {    // only for testing purposes on this screen
+                await AsyncStorage.setItem(key, String(value));
+                console.log(key, 'reset to', value);
+            } else {
+                var newValue;   // to store final value after addition
+                await AsyncStorage.getItem(key).then((result) => newValue = Number(result) + value); // newValue = previousValue + inputValue
+                await AsyncStorage.setItem(key, newValue);
+                console.log(key, 'increased to', newValue);
+            }
+        } catch (e) {
+            // saving error
+            console.log('Save error for [', key, ']: ', e);
+        }
+    };
+
+    // retrieve number data from local storage
+    const getData = async (key: string) => {
+        try {
+            const value = await AsyncStorage.getItem(key);
+            if (value !== null) {
+                // value previously stored
+            }
+        } catch (e) {
+            // error reading value
+            console.log('Read error for [', key, ']: ', e);
+        }
+    };
 
     return (
         <View style={styles.main}>
@@ -57,7 +89,7 @@ export default function ManualInput() {
                                 keyboardType='numeric'
                             />
                         </KeyboardAvoidingView>
-                        <Pressable style={styles.bubble} onPress={() => { console.log(number); onChangeNumber(''); setStepsVisible(false) }}>
+                        <Pressable style={styles.bubble} onPress={() => { storeData('steps', Number(number)); onChangeNumber(''); setStepsVisible(false) }}>
                             <Text style={styles.text}>Enter</Text>
                         </Pressable>
                         <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { onChangeNumber(''); setStepsVisible(false) }}>
@@ -86,7 +118,7 @@ export default function ManualInput() {
                         <Pressable style={[styles.bubble, styles.bubbleBlue]} onPress={() => setMetricUnits(!metricUnits)}>
                             <Text style={styles.text}>Metric unit toggle: {metricUnits ? 'km' : 'mi'}</Text>
                         </Pressable>
-                        <Pressable style={styles.bubble} onPress={() => { console.log(number); onChangeNumber(''); setDistVisible(false) }}>
+                        <Pressable style={styles.bubble} onPress={() => { storeData('distance', Number(number)); onChangeNumber(''); setDistVisible(false) }}>
                             <Text style={styles.text}>Enter</Text>
                         </Pressable>
                         <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { onChangeNumber(''); setDistVisible(false) }}>
@@ -114,7 +146,7 @@ export default function ManualInput() {
                                 keyboardType='numeric'
                             />
                         </KeyboardAvoidingView>
-                        <Pressable style={styles.bubble} onPress={() => { console.log(number); onChangeNumber(''); setCalVisible(false) }}>
+                        <Pressable style={styles.bubble} onPress={() => { storeData('calories', -Number(number)); onChangeNumber(''); setCalVisible(false) }}>
                             <Text style={styles.text}>Enter</Text>
                         </Pressable>
                         <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { onChangeNumber(''); setCalVisible(false) }}>

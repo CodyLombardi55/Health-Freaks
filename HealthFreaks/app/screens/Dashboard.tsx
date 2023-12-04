@@ -2,16 +2,20 @@ import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ImageBackground, Pressable } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Timer from './Timer';
 import BMICalc from "./BMICalc";
 import Steps from './Steps';
 import HealthTips from "./HealthTips";
 import Feed from "./Feed2";
+import { convertToObject } from "typescript";
 
 const Stack = createNativeStackNavigator();
 
 function Dashboard({ navigation }) {
+    const today = new Date();
+    const todayFormatted = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const [steps, setSteps] = useState(0);
     const [calories, setCalories] = useState(0);
     const assets = {
@@ -19,6 +23,46 @@ function Dashboard({ navigation }) {
         'streetSoul': require('../../assets/fonts/streetSoul.ttf'),
         'background': require('../../assets/BACKGROUND.png')
     }
+
+    // save number data to local storage
+    const storeData = async (key: string, value: string, reset: boolean = false) => {
+        try {
+            await AsyncStorage.setItem(key, value);
+            console.log(key, 'set to', value);
+        } catch (e) {
+            // saving error
+            console.log('Save error for [', key, ']: ', e);
+        }
+    };
+
+    // retrieve number data from local storage
+    const getData = async (key: string) => {
+        try {
+            const value = await AsyncStorage.getItem(key);
+            if (value !== null) {
+                // value previously stored
+                console.log('Current', key, 'value:', value);
+                if (key === 'steps') {
+                    setSteps(Number(value));
+                } else if (key === 'calories') {
+                    setCalories(Number(value));
+                }
+            }
+        } catch (e) {
+            // error reading value
+            console.log('Read error for [', key, ']: ', e);
+        }
+    };
+
+    function refreshData() {
+        getData('steps');
+        getData('calories');
+    };
+
+    useEffect(() => {
+        refreshData();
+        console.log(todayFormatted);
+    }, []);
 
     return (
         <ImageBackground source={assets.background} resizeMode='cover' style={styles.background}>
@@ -28,11 +72,11 @@ function Dashboard({ navigation }) {
                         <Text style={[styles.bubbleTitle, { fontSize: 48, fontFamily: 'hitMePunk' }]}>Fitness</Text>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={[styles.container, { alignItems: 'center' }]}>
-                                <Text style={styles.text}>Steps</Text>
+                                <Text style={styles.text}>Daily Steps</Text>
                                 <Text style={styles.text}>{steps}</Text>
                             </View>
                             <View style={[styles.container, { alignItems: 'center' }]}>
-                                <Text style={styles.text}>Calories</Text>
+                                <Text style={styles.text}>Net Calories</Text>
                                 <Text style={styles.text}>{calories}</Text>
                             </View>
                         </View>

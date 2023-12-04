@@ -30,9 +30,7 @@ const TabBar = () => {
         let iconName;
 
         if (route.name === 'Dashboard') {
-          iconName = focused
-            ? 'globe'
-            : 'globe-outline';
+          iconName = focused ? 'globe' : 'globe-outline';
         }
         else if (route.name === 'Graphs') {
           iconName = focused ? 'analytics' : 'analytics-outline';
@@ -60,7 +58,7 @@ const TabBar = () => {
         <BlurView tint="dark" intensity={100} style={StyleSheet.absoluteFill} />
       ),
     })} >
-      <Tab.Screen name='Dashboard' component={Dashboard} />
+      <Tab.Screen name='Dashboard' component={Dashboard} options={{ unmountOnBlur: true }} />
       <Tab.Screen name='Graphs' component={Graphs} />
       <Tab.Screen name='Input' component={ManualInput} />
       <Tab.Screen name='Settings' component={Settings} />
