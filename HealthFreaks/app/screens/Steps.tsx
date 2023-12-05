@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, ImageBackground } from "react-native";
+import { StyleSheet, Text, View, ImageBackground, Pressable } from "react-native";
 import { Pedometer } from 'expo-sensors';
 import CircularProgress from 'react-native-circular-progress-indicator';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
     const [PedometerAvailabiity, setPedometerAvailability] = useState("");
@@ -10,7 +11,8 @@ export default function App() {
 
     useEffect(() => {
         subscribe();
-    }, []);
+        getData()
+    }, [currentStepCount]);
 
     const subscribe = () => {
         const subscription = Pedometer.watchStepCount((result) => {
@@ -28,6 +30,30 @@ export default function App() {
         );
     }
 
+    const setLocalData = async () => {
+        try {
+            await AsyncStorage.setItem('steps', String(currentStepCount + 1));
+            console.log('Updated steps');
+        } catch (e) {
+            // saving error
+            console.log('Save error for [steps]: ', e);
+        }
+    };
+
+    // retrieve number data from local storage
+    const getData = async () => {
+        try {
+            const value = await AsyncStorage.getItem('steps');
+            if (value !== null) {
+                // value previously stored
+                setCurrentStepCount(Number(value));
+            }
+        } catch (e) {
+            // error reading value
+            console.log('Read error for [steps]: ', e);
+        }
+    };
+
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -35,30 +61,27 @@ export default function App() {
                 resizeMode='cover'
                 source={require('../../assets/BACKGROUND.png')}
             >
-                <View style={{ flex: 1, justifyContent: "center" }}>
+                <View style={{ flex: 1, justifyContent: "center", alignItems: 'center' }}>
                     <Text style={styles.headingDesign}> Step Counter Active :{PedometerAvailabiity}</Text>
-
-                    <View>
-                        <CircularProgress
-                            value={currentStepCount}
-                            maxValue={6500}
-                            radius={210}
-                            //textColor={'#ECF0F1'}
-                            activeStrokeColor={'#F39C12'}
-                            inActiveStrokeColor={'#9B59F9'}
-                            inActiveStrokeOpacity={0.5}
-                            inActiveStrokeWidth={40}
-                            activeStrokeWidth={40}
-                            title={"Step Count"}
-                            titleColor={"#ECF0F1"}
-                            titleStyle={{ fontWeight: "bold" }}
-                        />
-                    </View>
-
+                    <CircularProgress
+                        value={currentStepCount}
+                        maxValue={6500}
+                        radius={180}
+                        //textColor={'#ECF0F1'}
+                        activeStrokeColor={'#F39C12'}
+                        inActiveStrokeColor={'#9B59F9'}
+                        inActiveStrokeOpacity={0.5}
+                        inActiveStrokeWidth={40}
+                        activeStrokeWidth={40}
+                        title={"Step Count"}
+                        titleColor={"#ECF0F1"}
+                        titleStyle={{ fontWeight: "bold" }}
+                    />
+                    <Pressable onPress={() => { setLocalData() }}>
+                        <Text>Update steps</Text>
+                    </Pressable>
                 </View>
-
             </ImageBackground>
-
             <StatusBar style="auto" />
         </View>
     )

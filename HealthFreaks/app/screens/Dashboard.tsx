@@ -1,31 +1,78 @@
+// basic design imports
 import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ImageBackground, Pressable } from "react-native";
+// for nested navigation (ie. the buttons on the dashboard page, but not the tab bar)
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// store/access user step data
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
+import { FIREBASE_AUTH, FIRESTORE_DB } from "../../FireBaseConfig";
 
+// the following are nested navigation pages (ie. the dashboard buttons)
 import Timer from './Timer';
 import BMICalc from "./BMICalc";
 import Steps from './Steps';
-import HealthTips from "./HealthTips";
 import Feed from "./Feed2";
-import { convertToObject } from "typescript";
 
 const Stack = createNativeStackNavigator();
 
 function Dashboard({ navigation }) {
-    const today = new Date();
-    const todayFormatted = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    const today = new Date();   // get current date according to device
+    const todayFormatted = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();  // minimal format of date as YYYY-MM-DD
+    const docRef = doc(FIRESTORE_DB, 'users', String(FIREBASE_AUTH.currentUser?.email));
+    const [localExists, setLocalExists] = useState(true);
+
     const [steps, setSteps] = useState(0);
     const [calories, setCalories] = useState(0);
+
     const assets = {
         'hitMePunk': require('../../assets/fonts/hitMePunk.ttf'),
         'streetSoul': require('../../assets/fonts/streetSoul.ttf'),
         'background': require('../../assets/BACKGROUND.png')
     }
 
+    async function setCloudData() {
+        try {
+            // update values on cloud db
+            await updateDoc(docRef, {
+                todayDate: todayFormatted,
+                todaySteps: steps,
+            });
+            console.log('Uploaded data successfully');
+        } catch (err) {
+            console.log('Error uploading:', err);
+        }
+    }
+
+    async function getCloudData() {
+        try {
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) { // user in db
+                if (docSnap.data().todayDate != todayFormatted) { // new day, so reset daily values
+                    console.log('New day. Resetting daily values');
+                    setLocalData('steps', '0');
+                    setLocalData('calories', '0');
+                } else {    // same day, just get values
+                    console.log('Getting saved daily values');
+                    getLocalData('steps').then(() => {
+                        if(localExists){
+                            console.log('foo');
+                            console.log(docSnap.data().todaySteps);
+                        }
+                    });
+                }
+            }
+        } catch (err) {
+            console.log('Failed to retrieve cloud data:', err);
+            // retrieve last saved local data as fallback
+            console.log('Getting saved daily values');
+            getLocalData('steps');
+        }
+    }
+
     // save number data to local storage
-    const storeData = async (key: string, value: string, reset: boolean = false) => {
+    const setLocalData = async (key: string, value: string, reset: boolean = false) => {
         try {
             await AsyncStorage.setItem(key, value);
             console.log(key, 'set to', value);
@@ -36,7 +83,7 @@ function Dashboard({ navigation }) {
     };
 
     // retrieve number data from local storage
-    const getData = async (key: string) => {
+    const getLocalData = async (key: string) => {
         try {
             const value = await AsyncStorage.getItem(key);
             if (value !== null) {
@@ -47,6 +94,9 @@ function Dashboard({ navigation }) {
                 } else if (key === 'calories') {
                     setCalories(Number(value));
                 }
+            } else {
+                console.log('No local data for', key);
+                setLocalExists(false);
             }
         } catch (e) {
             // error reading value
@@ -55,34 +105,30 @@ function Dashboard({ navigation }) {
     };
 
     function refreshData() {
-        getData('steps');
-        getData('calories');
+        getCloudData().then(() => {
+            setCloudData();
+        });
     };
 
     useEffect(() => {
         refreshData();
-        console.log(todayFormatted);
     }, []);
 
     return (
         <ImageBackground source={assets.background} resizeMode='cover' style={styles.background}>
-            <View style={[styles.container, { marginTop: 40, flex: 0 }]}>
-                <View style={styles.bubble}>
-                    <Pressable onPress={() => { navigation.navigate('Steps') }}>
-                        <Text style={[styles.bubbleTitle, { fontSize: 48, fontFamily: 'hitMePunk' }]}>Fitness</Text>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={[styles.container, { alignItems: 'center' }]}>
-                                <Text style={styles.text}>Daily Steps</Text>
-                                <Text style={styles.text}>{steps}</Text>
-                            </View>
-                            <View style={[styles.container, { alignItems: 'center' }]}>
-                                <Text style={styles.text}>Net Calories</Text>
-                                <Text style={styles.text}>{calories}</Text>
-                            </View>
-                        </View>
-                    </Pressable>
+            <Pressable style={[styles.bubble, { marginTop: 80 }]} onPress={() => { navigation.navigate('Steps') }}>
+                <Text style={[styles.bubbleTitle, { fontSize: 48, fontFamily: 'hitMePunk' }]}>Fitness</Text>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={[styles.container, { alignItems: 'center' }]}>
+                        <Text style={styles.text}>Daily Steps</Text>
+                        <Text style={styles.text}>{steps}</Text>
+                    </View>
+                    <View style={[styles.container, { alignItems: 'center' }]}>
+                        <Text style={styles.text}>Net Calories</Text>
+                        <Text style={styles.text}>{calories}</Text>
+                    </View>
                 </View>
-            </View>
+            </Pressable>
             <View style={[styles.container, styles.centerButtons]}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                     <Pressable
@@ -120,7 +166,7 @@ export default function Main() {
             <Stack.Navigator screenOptions={{
                 headerTransparent: true,
                 headerTitle: '',
-                headerTintColor: '#fff'
+                headerTintColor: '#fff',
             }}>
                 <Stack.Screen name='Dashboard' component={Dashboard} />
                 <Stack.Screen name='Timer' component={Timer} />

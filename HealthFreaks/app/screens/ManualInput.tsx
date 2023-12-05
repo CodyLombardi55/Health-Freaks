@@ -30,7 +30,7 @@ export default function ManualInput() {
                 var newValue;   // to store final value after addition
                 await AsyncStorage.getItem(key).then((result) => newValue = Number(result) + value); // newValue = previousValue + inputValue
                 await AsyncStorage.setItem(key, newValue);
-                console.log(key, 'increased to', newValue);
+                console.log(key, 'changed to', newValue);
             }
         } catch (e) {
             // saving error
@@ -118,7 +118,7 @@ export default function ManualInput() {
                         <Pressable style={[styles.bubble, styles.bubbleBlue]} onPress={() => setMetricUnits(!metricUnits)}>
                             <Text style={styles.text}>Metric unit toggle: {metricUnits ? 'km' : 'mi'}</Text>
                         </Pressable>
-                        <Pressable style={styles.bubble} onPress={() => { storeData('distance', Number(number)); onChangeNumber(''); setDistVisible(false) }}>
+                        <Pressable style={styles.bubble} onPress={() => { storeData('steps', (Number(number) * (metricUnits ? 1408 : 2252))); onChangeNumber(''); setDistVisible(false) }}>
                             <Text style={styles.text}>Enter</Text>
                         </Pressable>
                         <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { onChangeNumber(''); setDistVisible(false) }}>
