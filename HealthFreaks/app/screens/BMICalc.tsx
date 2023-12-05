@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Pressable, ImageBackground } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function BMICalc() {
    const [height, setHeight] = useState('');
@@ -7,6 +8,35 @@ function BMICalc() {
    const [bmi, setBMI] = useState('');
    const [bmiResult, setBMIResult] = useState('');
    const [metricUnits, setUnits] = useState(true);
+   const [loaded, setLoaded] = useState(false);
+
+   useEffect(() => {
+      getData();
+      if (loaded) {
+      }
+   }, [loaded]);
+
+   const getData = async () => {
+      try {
+         const h = await AsyncStorage.getItem('height');
+         const w = await AsyncStorage.getItem('weight');
+         const metric = await AsyncStorage.getItem('metricUnits');
+         if (h !== null) {
+            setHeight(h);
+         }
+         if (w !== null) {
+            setWeight(w);
+         }
+         if (metric !== null) {
+            setUnits(Boolean(metric));
+         }
+      } catch (e) {
+         // error reading value
+         console.log('Read error for local values:', e);
+      } finally {
+         setLoaded(true);
+      }
+   };
 
    function calculate(height: string, weight: string) {
       //calculation
@@ -45,8 +75,9 @@ function BMICalc() {
             <View style={[styles.inputField, { padding: 0 }]}>
                <TextInput style={styles.inputToggle}
                   underlineColorAndroid="transparent"
+                  defaultValue={height}
                   placeholder="Height"
-                  placeholderTextColor={'darkblue'}
+                  placeholderTextColor={'royalblue'}
                   autoCapitalize="none"
                   keyboardType='numeric'
                   onChangeText={setHeight} />
@@ -58,8 +89,9 @@ function BMICalc() {
             <View style={[styles.inputField, { padding: 0 }]}>
                <TextInput style={styles.inputToggle}
                   underlineColorAndroid="transparent"
+                  defaultValue={weight}
                   placeholder="Weight"
-                  placeholderTextColor={'darkblue'}
+                  placeholderTextColor={'royalblue'}
                   autoCapitalize="none"
                   keyboardType='numeric'
                   onChangeText={setWeight} />
@@ -75,17 +107,17 @@ function BMICalc() {
             <Text style={styles.resultText}>{bmiResult}</Text>
 
             {bmiResult && (
-            <Text style={styles.bmipercentText}>
-               BMI Status: {bmipercentInfo(bmiResult)}
-            </Text>
-         )}
+               <Text style={styles.bmipercentText}>
+                  BMI Status: {bmipercentInfo(bmiResult)}
+               </Text>
+            )}
          </View>
       </ImageBackground>
    )
 }
-         // Display BMI status information
+// Display BMI status information
 function bmipercentInfo(result: string) {
-   
+
    switch (result) {
       case 'Underweight':
          return '\nYour BMI is less than 18.4 and falls within the underweight range. Consider contacting your healthcare provider to setup a nutrition plan for healthy weight gain.';
@@ -144,7 +176,7 @@ const styles = StyleSheet.create({
       shadowRadius: 20,
       padding: 10,
       marginVertical: 15,
-      height: 40,
+      height: 'auto',
    },
    submitButtonText: { //"Calculate txt"
       textAlign: "center",
@@ -186,5 +218,10 @@ const styles = StyleSheet.create({
       textAlign: "center",
       fontSize: 17,
       color: 'white',
-    },
+      backgroundColor: 'rgba(0, 0, 0, .69)',
+      borderRadius: 8,
+      borderColor: 'white',
+      borderWidth: 1,
+      padding: 4,
+   },
 })
