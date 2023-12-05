@@ -57,13 +57,8 @@ function Dashboard({ navigation }) {
                     setLocalData('calories', '0');
                 } else {    // same day, just get values
                     console.log('Getting saved daily values');
-                    getLocalData('steps').then(() => {
-                        if(localExists){
-                            console.log('foo');
-                            console.log(docSnap.data().todaySteps);
-                        }
-                    });
-                    getLocalData('calories')
+                    getLocalData('steps');
+                    getLocalData('calories');
                 }
             }
         } catch (err) {
@@ -226,7 +221,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         color: 'red',
-        fontFamily: 'streetSoul',
+        //fontFamily: 'streetSoul',
     },
     background: {
         flex: 1,
