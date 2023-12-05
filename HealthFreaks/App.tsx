@@ -18,6 +18,11 @@ import Graphs from './app/screens/Graphs';
 import Settings from './app/screens/Settings';
 import Profile from './app/screens/Profile';
 import ManualInput from './app/screens/ManualInput';
+import Steps from './app/screens/Steps';
+import Feed from './app/screens/Feed';
+import Feed2 from './app/screens/Feed2';
+import FreeWorkouts from './app/screens/FreeWorkouts';
+import Exercise from './app/screens/Exercise';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -62,6 +67,10 @@ const TabBar = () => {
       <Tab.Screen name='Graphs' component={Graphs} />
       <Tab.Screen name='Input' component={ManualInput} />
       <Tab.Screen name='Settings' component={Settings} />
+      <Tab.Screen name='Feed2' component={Feed2} />
+      <Tab.Screen name='Exercise' component={Exercise} />
+      <Tab.Screen name='Free Workouts' component={FreeWorkouts} />
+      
     </Tab.Navigator>
   );
 };

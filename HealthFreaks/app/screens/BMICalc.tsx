@@ -73,10 +73,33 @@ function BMICalc() {
             </TouchableOpacity>
             <Text style={styles.output}>{bmi}</Text>
             <Text style={styles.resultText}>{bmiResult}</Text>
+
+            {bmiResult && (
+            <Text style={styles.bmipercentText}>
+               BMI Status: {bmipercentInfo(bmiResult)}
+            </Text>
+         )}
          </View>
       </ImageBackground>
    )
 }
+         // Display BMI status information
+function bmipercentInfo(result: string) {
+   
+   switch (result) {
+      case 'Underweight':
+         return '\nYour BMI is less than 18.4 and falls within the underweight range. Consider contacting your healthcare provider to setup a nutrition plan for healthy weight gain.';
+      case 'Normal weight':
+         return '\nYour BMI is within 18.5 to 24.9 and falls within the healthy weight range. To maintain a healthy weight, continue a lifestyle that consists of balanced nutrition and regular exercise.';
+      case 'Overweight':
+         return '\nYour BMI is within 25.0 to 29.9 and falls within the overweight range. Consider contacting your healthcare provider to setup a nutrition plan for healthy weight gain.';
+      case 'Obese':
+         return '\nYour BMI is 30.0 or higher and falls within the obese range. Consider contacting your healthcare provider to setup a nutrition plan for healthy weight loss and to discuss potential health risks.';
+      default:
+         return '';
+   }
+}
+
 export default BMICalc;
 
 const styles = StyleSheet.create({
@@ -158,5 +181,10 @@ const styles = StyleSheet.create({
       fontSize: 30,
       color: 'lime',
       fontFamily: 'streetSoul',
-   }
+   },
+   bmipercentText: {
+      textAlign: "center",
+      fontSize: 17,
+      color: 'white',
+    },
 })
