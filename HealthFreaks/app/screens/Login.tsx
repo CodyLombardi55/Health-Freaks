@@ -12,8 +12,9 @@ const customFonts = {
   'streetSoul': require('../../assets/fonts/streetSoul.ttf')
 }
 export async function loadCustomFonts() {
-  await Font.loadAsync(customFonts);
+    await Font.loadAsync(customFonts);
 }
+
 
 interface RouterProps {
   navigation: NavigationProp<any, any>;
