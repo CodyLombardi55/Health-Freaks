@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Linking, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Linking, ScrollView, ImageBackground } from 'react-native';
 
 const HealthTips = () => {
   const handleImageClick1 = () => {
@@ -102,6 +102,7 @@ const HealthTips = () => {
   };
 
   return (
+    <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={styles.background}>
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
         
@@ -267,7 +268,7 @@ const HealthTips = () => {
 
       </View>
     </ScrollView>
-    
+    </ImageBackground>
   );
 };
 
@@ -280,6 +281,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
   },
   image: {
     width: 325,
