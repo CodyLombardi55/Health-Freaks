@@ -37,20 +37,20 @@ const TabBar = () => {
         if (route.name === 'Dashboard') {
           iconName = focused ? 'globe' : 'globe-outline';
         }
-        else if (route.name === 'Graphs') {
-          iconName = focused ? 'analytics' : 'analytics-outline';
-        }
-        else if (route.name === 'BMICalc') {
-          iconName = focused ? 'calculator' : 'calculator-outline';
+        else if (route.name === 'Input') {
+          iconName = focused ? 'add' : 'add-outline';
         }
         else if (route.name === 'Timer') {
           iconName = focused ? 'alarm' : 'alarm-outline';
         }
+        else if (route.name === 'Exercise') {
+          iconName = focused ? 'walk-outline' : 'walk-outline' 
+        }
+        else if (route.name === 'Free Workout') {
+          iconName = focused ? 'desktop-outline' : 'desktop-outline';
+        }
         else if (route.name === 'Settings') {
           iconName = focused ? 'ios-list' : 'ios-list-outline';
-        }
-        else if (route.name === 'Input') {
-          iconName = focused ? 'add' : 'add-outline';
         }
 
         // You can return any component that you like here!
@@ -64,12 +64,10 @@ const TabBar = () => {
       ),
     })} >
       <Tab.Screen name='Dashboard' component={Dashboard} options={{ unmountOnBlur: true }} />
-      <Tab.Screen name='Graphs' component={Graphs} />
       <Tab.Screen name='Input' component={ManualInput} />
-      <Tab.Screen name='Settings' component={Settings} />
-      <Tab.Screen name='Feed2' component={Feed2} />
       <Tab.Screen name='Exercise' component={Exercise} />
       <Tab.Screen name='Free Workouts' component={FreeWorkouts} />
+      <Tab.Screen name='Settings' component={Settings} />
       
     </Tab.Navigator>
   );
