@@ -37,7 +37,7 @@ const WorkoutScreen = () => {
             onPress={() => navigation.navigate("Fit",{
                 exercises:route.params.exercises,
             })} 
-            style={{ backgroundColor: "blue", padding: 10, marginLeft: "auto", marginRight: "auto", marginVertical: 20, width: 120, borderRadius: 6 }}>
+            style={{ backgroundColor: "blue", padding: 10, marginLeft: "auto", marginRight: "auto", marginVertical: 90, width: 120, borderRadius: 6 }}>
                 <Text style={{ textAlign: "center", color: "white", fontSize: 15, fontWeight: "600" }}>START</Text>
             </Pressable>
         </>

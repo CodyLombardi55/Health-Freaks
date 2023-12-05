@@ -27,7 +27,7 @@ const FitnessCards = () => {
                 />
             </Pressable>
         ))}
-      <Text>FitnessCards</Text>
+     
     </View>
   );
 };

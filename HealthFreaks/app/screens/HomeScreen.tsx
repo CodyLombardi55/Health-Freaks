@@ -5,28 +5,28 @@ import FitnessCards from "../../components/FitnessCards"
 const HomeScreen = () => {
     return (
         <ScrollView style={{marginTop:50}}>
-            <View style={{ backgroundColor: "#CD853F", padding: 10, height: "22%", width: "100%" }}>
-                <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>HOME WORKOUT</Text>
+            <View style={{ backgroundColor: "purple", padding: 10, height: "22%", width: "100%" }}>
+                <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>SELF-PACED WORKOUTS</Text>
 
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 20 }}>
                     <View>
-                        <Text style={{ textAlign: "center", fontWeight: "bold", color: "white", fontSize: 18 }}>0</Text>
-                        <Text style={{ color:"#D0D0D0", fontSize: 17, marginTop: 6}}>WORKOUTS</Text>
+                        <Text style={{ textAlign: "center", fontWeight: "bold", color: "white", fontSize: 18 }}> </Text>
+                        <Text style={{ color:"#D0D0D0", fontSize: 17, marginTop: 6}}> </Text>
                     </View>
 
                     <View>
-                        <Text style={{ textAlign: "center", fontWeight: "bold", color: "white", fontSize: 18 }}>0</Text>
-                        <Text style={{ color:"#D0D0D0", fontSize: 17, marginTop: 6}}>KCAL</Text>
+                        <Text style={{ textAlign: "center", fontWeight: "bold", color: "white", fontSize: 18 }}> </Text>
+                        <Text style={{ color:"#D0D0D0", fontSize: 17, marginTop: 6}}> </Text>
                     </View>
 
                     <View>
-                        <Text style={{ textAlign: "center", fontWeight: "bold", color: "white", fontSize: 18 }}>0</Text>
-                        <Text style={{ color:"#D0D0D0", fontSize: 17, marginTop: 6}}>MINUTES</Text>
+                        <Text style={{ textAlign: "center", fontWeight: "bold", color: "white", fontSize: 18 }}> </Text>
+                        <Text style={{ color:"#D0D0D0", fontSize: 17, marginTop: 6}}> </Text>
                     </View>
                 </View>
 
                 <View style={{ justifyContent: "center", alignItems: "center" }}>
-                <Image style={{ width: "90%", height: 120, marginTop: 20, borderRadius: 7 }} source={{uri: "https://cdn-images.cure.fit/www-curefit-com/image/upload/c_fill,w_842,ar_1.2,q_auto:eco,dpr_2,f_auto,fl_progressive/image/test/sku-card-widget/gold2.png", }} />
+                <Image style={{ width: "90%", height: 199, marginTop: 20, marginBottom: 20, borderRadius: 20 }} source={{uri: "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/67419bb645130b3876f5bbdb5afd5000.jpg?imageView2/2/w/800/q/70" }} />
                 </View>
                 <FitnessCards/>
             </View>
