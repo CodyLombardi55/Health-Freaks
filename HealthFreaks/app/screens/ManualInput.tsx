@@ -21,16 +21,16 @@ export default function ManualInput() {
     const [metricUnits, setMetricUnits] = useState(true);
 
     // save number data to local storage
-    const storeData = async (key: string, value: number, reset: boolean = false) => {
+    const storeData = async (key: string, value: string, reset: boolean = false) => {
         try {
             if (reset) {    // only for testing purposes on this screen
-                await AsyncStorage.setItem(key, String(value));
+                await AsyncStorage.setItem(key, value);
                 console.log(key, 'reset to', value);
             } else {
                 var newValue;   // to store final value after addition
-                await AsyncStorage.getItem(key).then((result) => newValue = Number(result) + value); // newValue = previousValue + inputValue
-                await AsyncStorage.setItem(key, newValue);
-                console.log(key, 'changed to', newValue);
+                await AsyncStorage.getItem(key).then((result) => newValue = Number(result) + Number(value)); // newValue = previousValue + inputValue
+                await AsyncStorage.setItem(key, String(newValue));
+                console.log(key, 'changed to', String(newValue));
             }
         } catch (e) {
             // saving error
@@ -86,10 +86,10 @@ export default function ManualInput() {
                                 value={number}
                                 placeholder='Steps walked'
                                 placeholderTextColor='gray'
-                                keyboardType='numeric'
+                                //keyboardType='numeric'
                             />
                         </KeyboardAvoidingView>
-                        <Pressable style={styles.bubble} onPress={() => { storeData('steps', Number(number)); onChangeNumber(''); setStepsVisible(false) }}>
+                        <Pressable style={styles.bubble} onPress={() => { storeData('steps', number); onChangeNumber(''); setStepsVisible(false) }}>
                             <Text style={styles.text}>Enter</Text>
                         </Pressable>
                         <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { onChangeNumber(''); setStepsVisible(false) }}>
@@ -113,12 +113,12 @@ export default function ManualInput() {
                             value={number}
                             placeholder='Distance walked'
                             placeholderTextColor='gray'
-                            keyboardType='numeric'
+                            //keyboardType='numeric'
                         />
                         <Pressable style={[styles.bubble, styles.bubbleBlue]} onPress={() => setMetricUnits(!metricUnits)}>
                             <Text style={styles.text}>Metric unit toggle: {metricUnits ? 'km' : 'mi'}</Text>
                         </Pressable>
-                        <Pressable style={styles.bubble} onPress={() => { storeData('steps', (Number(number) * (metricUnits ? 1408 : 2252))); onChangeNumber(''); setDistVisible(false) }}>
+                        <Pressable style={styles.bubble} onPress={() => { storeData('steps', String(Number(number) * (metricUnits ? 1408 : 2252))); onChangeNumber(''); setDistVisible(false) }}>
                             <Text style={styles.text}>Enter</Text>
                         </Pressable>
                         <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { onChangeNumber(''); setDistVisible(false) }}>
@@ -143,10 +143,10 @@ export default function ManualInput() {
                                 value={number}
                                 placeholder='Calories consumed'
                                 placeholderTextColor='gray'
-                                keyboardType='numeric'
+                                //keyboardType='numeric'
                             />
                         </KeyboardAvoidingView>
-                        <Pressable style={styles.bubble} onPress={() => { storeData('calories', -Number(number)); onChangeNumber(''); setCalVisible(false) }}>
+                        <Pressable style={styles.bubble} onPress={() => { storeData('calories', number); onChangeNumber(''); setCalVisible(false) }}>
                             <Text style={styles.text}>Enter</Text>
                         </Pressable>
                         <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { onChangeNumber(''); setCalVisible(false) }}>

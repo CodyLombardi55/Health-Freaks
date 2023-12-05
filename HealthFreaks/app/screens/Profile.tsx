@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, KeyboardAvoidingView, Button, Pressable, TextInput, ImageBackground, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIRESTORE_DB } from '../../FireBaseConfig';
 import SelectDropdown from 'react-native-select-dropdown';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -46,7 +46,7 @@ function Profile() {
 
     async function saveData() {
         try {
-            await setDoc(docRef, {
+            await updateDoc(docRef, {
                 firstName: firstName,
                 lastName: lastName,
                 age: parseInt(age),
