@@ -4,10 +4,10 @@ import FitnessCards from "../../components/FitnessCards"
 
 const HomeScreen = () => {
     return (
-        <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover'>
+        <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={{flex:1}}>
             <ScrollView style={{ marginTop: 50 }}>
-                <View style={{ backgroundColor: "purple", padding: 10, height: "22%", width: "100%" }}>
-                    <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>SELF-PACED WORKOUTS</Text>
+                <View style={{ backgroundColor: "purple", padding: 10, height: "16%", width: "100%" }}>
+                    <Text style={{ color: "white", fontWeight: "bold", fontSize: 20, textAlign: "center" }}>SELF-PACED WORKOUTS</Text>
 
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 20 }}>
                         <View>

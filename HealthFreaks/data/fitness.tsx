@@ -15,14 +15,14 @@ export default [
         },
         {
             id:"11",
-            image:"https://177d01fbswx3jjl1t20gdr8j-wpengine.netdna-ssl.com/wp-content/uploads/2019/06/Incline-Push-Up.gif",
+            image:"https://static.wixstatic.com/media/7df78f_d49115d8f108408d99ac185043e521ce~mv2.gif",
             name:"INCLINE PUSH-UPS",
             sets:10,
         },
         {
             id:"12",
             image:"https://media.self.com/photos/583c641ca8746f6e65a60c7e/master/w_1600%2Cc_limit/DIAMOND_PUSHUP_MOTIFIED.gif",
-            name:"INCLINED PUSH-UPS",
+            name:"DIAMOND PUSH-UPS",
             sets:10,
         },
         {
@@ -145,7 +145,7 @@ export default [
       exercises: [
         {
           id:"20",
-          image:"https://i.pinimg.com/originals/ff/cf/40/ffcf40474f0758dfedebc823f5532aa1.gif",
+          image:"https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/feetelevatedpushup-1457047025.gif?resize=980:*",
           name:"DECLINE PUSH-UPS",
           sets:9,
         },
@@ -157,13 +157,13 @@ export default [
         },
         {
           id:"22",
-          image:"https://thumbs.gfycat.com/TheseRigidBorer-size_restricted.gif",
+          image:"https://uwaterloo.ca/campus-wellness/sites/ca.campus-wellness/files/uploads/images/tricep.gif",
           name:"SHOULDER STRETCH",
           sets:5,
         },
         {
           id:"23",
-          image:"https://thumbs.gfycat.com/AlertAfraidAldabratortoise-max-1mb.gif",
+          image:"https://www.yogajournal.com/wp-content/uploads/2021/12/Cobra.gif?width=730",
           name:"COBRA STRETCH",
           sets:4,
         },
