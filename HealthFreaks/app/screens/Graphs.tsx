@@ -1,7 +1,7 @@
 import React from 'react'
 import { ScrollView, StatusBar, Dimensions, Text } from 'react-native'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
-import { LineChart, ProgressChart } from 'react-native-chart-kit'
+import { BarChart, LineChart, ProgressChart } from 'react-native-chart-kit'
 
 
 export default class App extends React.Component {
@@ -9,6 +9,18 @@ export default class App extends React.Component {
         return <StatusBar hidden />
     }
     render() {
+        const data = {
+            labels: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
+            datasets: [{
+                data: [50, 45, 60],
+                color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})` // change dot color
+            }, {
+                data: [10]
+            }, {
+                data: [20]
+            }]
+        }
+        const progressChartData = [0.5, 0.6, 0.9]
         const width = Dimensions.get('window').width
         const height = 250
         return (
@@ -28,7 +40,7 @@ export default class App extends React.Component {
                     return (
                         <ScrollView
                             key={Math.random()}
-                            style={{backgroundColor: chartConfig.backgroundColor}}
+                            style={{ backgroundColor: chartConfig.backgroundColor }}
                         >
                             <LineChart
                                 data={data}
@@ -45,7 +57,7 @@ export default class App extends React.Component {
                                 chartConfig={chartConfig}
                                 style={graphStyle}
                             />
-                            <LineChart
+                            <BarChart
                                 data={data}
                                 width={width}
                                 height={height}
@@ -59,25 +71,6 @@ export default class App extends React.Component {
         )
     }
 }
-
- // data used from manualinput.tsx
-const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-    datasets: [{
-        data: [50],
-        //color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})` // change dot color
-    }, {
-        data: [10]
-    }, {
-        data: [20]
-    }]
-}
-
-const progressChartData = [0.5, 0.6, 0.9]
-
-
-export { data, progressChartData }
-
 
 // swipe left or right to see different styles 
 const chartConfigs = [
