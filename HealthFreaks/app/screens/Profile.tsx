@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, KeyboardAvoidingView, Button, Pressable, TextInput } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Button, Pressable, TextInput, ImageBackground, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIRESTORE_DB } from '../../FireBaseConfig';
 import SelectDropdown from 'react-native-select-dropdown';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -46,7 +46,7 @@ function Profile() {
 
     async function saveData() {
         try {
-            await updateDoc(docRef, {
+            await setDoc(docRef, {
                 firstName: firstName,
                 lastName: lastName,
                 age: parseInt(age),
@@ -83,6 +83,7 @@ function Profile() {
     useEffect(() => { loadData() }, []); //load initial data on load
 
     return (
+        <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={styles.background}>
         <View style={styles.container}>
             <KeyboardAvoidingView style={{ rowGap: 16 }}>
                 <TextInput
@@ -151,20 +152,25 @@ function Profile() {
                         return item
                     }}
                     buttonStyle={[styles.inputField, { width: 'auto' }]}
-                    buttonTextStyle={{ textAlign: 'left' }}
+                    buttonTextStyle={{ textAlign: 'left', color: 'cyan', fontFamily: 'monospace' }}
                     defaultValue={sex}
                     renderDropdownIcon={isOpened => {
-                        return <Ionicons name={isOpened ? 'caret-up' : 'caret-down'} size={32} />
+                        return <Ionicons name={isOpened ? 'caret-up' : 'caret-down'} size={32} style={{
+                            color: 'deeppink',
+                            marginRight: 8,
+                          }}/>
                     }}
                     dropdownIconPosition={'right'}
                 />
-                <Text>Tap cm/in to toggle between Metric and Imperial units</Text>
+                <Text style={styles.infotxt}>Tap cm/in to toggle between Metric and Imperial units</Text>
             </KeyboardAvoidingView>
-            <Button
-                title='Save'
-                onPress={validateInput}
-            />
+            {/*<Button title='Save' onPress={validateInput} />*/}
+            <TouchableOpacity style={styles.menuBtn} onPress={() => validateInput()}>
+                    <Text style={styles.buttonText}> Save </Text>
+            </TouchableOpacity>
+
         </View>
+        </ImageBackground>
     )
 }
 export default Profile;
@@ -176,17 +182,51 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         rowGap: 16,
     },
+    background: {
+        flex: 1,
+        resizeMode: 'cover',
+    },
     inputField: {
         borderWidth: 1,
         borderRadius: 4,
+        borderColor: 'white',
+        shadowColor: 'deeppink',
+        shadowOffset: { width: 0, height: 0 },
+        shadowRadius: 20,
+        backgroundColor: 'rgba(0, 0, 0, .69)',
         padding: 10,
         fontSize: 20,
         flexDirection: 'row',
+        color: 'cyan',
+        fontFamily: 'monospace',
     },
     inputToggle: {
         fontSize: 20,
         flex: 1,
         padding: 10,
         borderRadius: 4,
+        fontFamily: 'monospace',
+        color: 'cyan',
+    },
+    menuBtn: {
+        backgroundColor: 'rgba(0, 0, 0, .69)',
+        borderWidth: 1,
+        borderColor: 'white',
+        shadowColor: 'cyan',
+        shadowOffset: { width: 0, height: 0 },
+        shadowRadius: 20,
+        padding: 10,
+        height: 40,
+    },
+    buttonText: {
+        textAlign: 'center',
+        color: 'cyan',
+        fontFamily: 'monospace',
+        fontSize: 16,
+    },
+    infotxt:{
+        color: 'yellow',
+        fontFamily: 'hitMePunk',
+        fontSize: 20,
     },
 });
