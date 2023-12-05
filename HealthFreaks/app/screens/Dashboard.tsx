@@ -1,6 +1,6 @@
 // basic design imports
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ImageBackground, Pressable } from "react-native";
+import { View, Text, StyleSheet, ImageBackground, Pressable, Platform } from "react-native";
 // for nested navigation (ie. the buttons on the dashboard page, but not the tab bar)
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -14,6 +14,7 @@ import Timer from './Timer';
 import BMICalc from "./BMICalc";
 import Steps from './Steps';
 import Feed from "./Feed2";
+import Graphs from "./Feed";
 
 const Stack = createNativeStackNavigator();
 
@@ -137,7 +138,10 @@ function Dashboard({ navigation }) {
                     >
                         <Text style={styles.bubbleTitle}>Health Tips</Text>
                     </Pressable>
-                    <Pressable style={styles.miniBubble}>
+                    <Pressable
+                        style={styles.miniBubble}
+                        onPress={() => { navigation.navigate('Graphs') }}
+                    >
                         <Text style={styles.bubbleTitle}>Graphs</Text>
                     </Pressable>
                 </View>
@@ -173,6 +177,7 @@ export default function Main() {
                 <Stack.Screen name='BMICalc' component={BMICalc} />
                 <Stack.Screen name='Steps' component={Steps} />
                 <Stack.Screen name='Feed' component={Feed} />
+                <Stack.Screen name='Graphs' component={Graphs} />
             </Stack.Navigator>
         </NavigationContainer>
     )
