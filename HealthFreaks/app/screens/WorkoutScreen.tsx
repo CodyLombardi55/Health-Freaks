@@ -3,10 +3,8 @@ import React from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Ionicons } from "@expo/vector-icons";
 
-const WorkoutScreen = () => {
-    const route = useRoute();
-    //console.log(route.params)
-    const navigation = useNavigation();
+const WorkoutScreen = ({ navigation, route }) => {
+    console.log(route.params.exercises);
     return (
         <>
             <ScrollView style={{ backgroundColor: "white", marginTop: 50, marginBottom: 0 }}>
@@ -31,13 +29,13 @@ const WorkoutScreen = () => {
                         </View>
                     </Pressable>
                 ))}
-            </ScrollView>            
+            </ScrollView>
 
             <Pressable
-            onPress={() => navigation.navigate("Fit",{
-                exercises:route.params.exercises,
-            })} 
-            style={{ backgroundColor: "blue", padding: 10, marginLeft: "auto", marginRight: "auto", marginVertical: 90, width: 120, borderRadius: 6 }}>
+                onPress={() => navigation.navigate("Fit", {
+                    exercises: route.params.exercises,
+                })}
+                style={{ backgroundColor: "blue", padding: 10, marginLeft: "auto", marginRight: "auto", marginVertical: 90, width: 120, borderRadius: 6 }}>
                 <Text style={{ textAlign: "center", color: "white", fontSize: 15, fontWeight: "600" }}>START</Text>
             </Pressable>
         </>
