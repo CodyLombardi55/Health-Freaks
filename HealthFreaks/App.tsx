@@ -70,7 +70,6 @@ const TabBar = () => {
       <Tab.Screen name='Feed2' component={Feed2} />
       <Tab.Screen name='Exercise' component={Exercise} />
       <Tab.Screen name='Free Workouts' component={FreeWorkouts} />
-     
       
     </Tab.Navigator>
   );
