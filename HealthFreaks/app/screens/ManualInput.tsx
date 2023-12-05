@@ -146,7 +146,7 @@ export default function ManualInput() {
                                 keyboardType='numeric'
                             />
                         </KeyboardAvoidingView>
-                        <Pressable style={styles.bubble} onPress={() => { storeData('calories', number); onChangeNumber(''); setCalVisible(false) }}>
+                        <Pressable style={styles.bubble} onPress={() => { storeData('calories', String(0 - Number(number))); onChangeNumber(''); setCalVisible(false) }}>
                             <Text style={styles.text}>Enter</Text>
                         </Pressable>
                         <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { onChangeNumber(''); setCalVisible(false) }}>
