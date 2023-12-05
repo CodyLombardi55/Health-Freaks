@@ -10,6 +10,7 @@ import Steps from './Steps';
 import HealthTips from "./HealthTips";
 import Feed from "./Feed2";
 import { convertToObject } from "typescript";
+import Graphs from "./Graphs";
 
 const Stack = createNativeStackNavigator();
 
@@ -91,7 +92,10 @@ function Dashboard({ navigation }) {
                     >
                         <Text style={styles.bubbleTitle}>Health Tips</Text>
                     </Pressable>
-                    <Pressable style={styles.miniBubble}>
+                    <Pressable
+                        style={styles.miniBubble}
+                        onPress={() => { navigation.navigate('Graphs') }}
+                    >
                         <Text style={styles.bubbleTitle}>Graphs</Text>
                     </Pressable>
                 </View>
@@ -127,6 +131,7 @@ export default function Main() {
                 <Stack.Screen name='BMICalc' component={BMICalc} />
                 <Stack.Screen name='Steps' component={Steps} />
                 <Stack.Screen name='Feed' component={Feed} />
+                <Stack.Screen name='Graphs' component={Graphs} />
             </Stack.Navigator>
         </NavigationContainer>
     )
