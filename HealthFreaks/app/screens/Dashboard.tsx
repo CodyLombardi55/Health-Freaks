@@ -39,6 +39,7 @@ function Dashboard({ navigation }) {
             await updateDoc(docRef, {
                 todayDate: todayFormatted,
                 todaySteps: steps,
+                todayCalories: calories,
             });
             console.log('Uploaded data successfully');
         } catch (err) {
@@ -62,6 +63,7 @@ function Dashboard({ navigation }) {
                             console.log(docSnap.data().todaySteps);
                         }
                     });
+                    getLocalData('calories')
                 }
             }
         } catch (err) {
@@ -69,6 +71,7 @@ function Dashboard({ navigation }) {
             // retrieve last saved local data as fallback
             console.log('Getting saved daily values');
             getLocalData('steps');
+            getLocalData('calories');
         }
     }
 
