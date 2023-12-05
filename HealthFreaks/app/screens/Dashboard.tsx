@@ -1,6 +1,6 @@
 // basic design imports
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ImageBackground, Pressable } from "react-native";
+import { View, Text, StyleSheet, ImageBackground, Pressable, Platform } from "react-native";
 // for nested navigation (ie. the buttons on the dashboard page, but not the tab bar)
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -14,7 +14,7 @@ import Timer from './Timer';
 import BMICalc from "./BMICalc";
 import Steps from './Steps';
 import Feed from "./Feed2";
-import Graphs from "./Graphs";
+import Graphs from "./Feed";
 
 const Stack = createNativeStackNavigator();
 

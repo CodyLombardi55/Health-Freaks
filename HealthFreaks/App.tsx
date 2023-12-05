@@ -14,7 +14,7 @@ import { useFonts } from 'expo-font';
 /* [Individual pages for app] */
 import Login from './app/screens/Login';
 import Dashboard from './app/screens/Dashboard';
-import Graphs from './app/screens/Graphs';
+import Graphs from './app/screens/Feed';
 import Settings from './app/screens/Settings';
 import Profile from './app/screens/Profile';
 import ManualInput from './app/screens/ManualInput';

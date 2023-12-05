@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Pressable, ImageBackground, Text, Modal, KeyboardAvoidingView, TextInput } from 'react-native';
+import { View, StyleSheet, Pressable, ImageBackground, Text, Modal, KeyboardAvoidingView, TextInput, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ManualInput() {
@@ -86,7 +86,7 @@ export default function ManualInput() {
                                 value={number}
                                 placeholder='Steps walked'
                                 placeholderTextColor='gray'
-                                //keyboardType='numeric'
+                                keyboardType={Platform.OS == 'android' ? 'numeric' : 'default'}
                             />
                         </KeyboardAvoidingView>
                         <Pressable style={styles.bubble} onPress={() => { storeData('steps', number); onChangeNumber(''); setStepsVisible(false) }}>
@@ -113,7 +113,7 @@ export default function ManualInput() {
                             value={number}
                             placeholder='Distance walked'
                             placeholderTextColor='gray'
-                            //keyboardType='numeric'
+                            keyboardType='numeric'
                         />
                         <Pressable style={[styles.bubble, styles.bubbleBlue]} onPress={() => setMetricUnits(!metricUnits)}>
                             <Text style={styles.text}>Metric unit toggle: {metricUnits ? 'km' : 'mi'}</Text>
@@ -143,7 +143,7 @@ export default function ManualInput() {
                                 value={number}
                                 placeholder='Calories consumed'
                                 placeholderTextColor='gray'
-                                //keyboardType='numeric'
+                                keyboardType='numeric'
                             />
                         </KeyboardAvoidingView>
                         <Pressable style={styles.bubble} onPress={() => { storeData('calories', number); onChangeNumber(''); setCalVisible(false) }}>
