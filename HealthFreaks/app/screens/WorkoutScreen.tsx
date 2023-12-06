@@ -14,9 +14,9 @@ const WorkoutScreen = () => {
 
                 <Ionicons
                     onPress={() => navigation.goBack()}
-                    style={{ position: "absolute", top: 20, left: 20 }}
+                    style={{ position: "absolute", top: 30, left: 20 }}
                     name="arrow-back-outline"
-                    size={28}
+                    size={32}
                     color="white"
                 />
 
