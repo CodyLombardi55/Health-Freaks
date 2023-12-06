@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, .69)',
         borderWidth: 1,
         borderColor: 'white',
-        shadowColor: 'darkviolet',
+        shadowColor: 'white',
         shadowOffset: { width: 0, height: 0 },
         shadowRadius: 20,
         padding: 10,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         textAlign: 'center',
-        color: 'darkviolet',
+        color: 'deeppink',
         fontFamily: 'monospace',
         fontSize: 16,
     },

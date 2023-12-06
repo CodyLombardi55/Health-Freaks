@@ -22,7 +22,7 @@ function Dashboard({ navigation }) {
     const today = new Date();   // get current date according to device
     const todayFormatted = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();  // minimal format of date as YYYY-MM-DD
     const docRef = doc(FIRESTORE_DB, 'users', String(FIREBASE_AUTH.currentUser?.email));
-    const [localExists, setLocalExists] = useState(true);
+    const [dataLoaded, setDataLoaded] = useState(false);
 
     const [steps, setSteps] = useState(0);
     const [calories, setCalories] = useState(0);
@@ -33,90 +33,78 @@ function Dashboard({ navigation }) {
         'background': require('../../assets/BACKGROUND.png')
     }
 
-    async function setCloudData() {
-        try {
-            // update values on cloud db
-            await updateDoc(docRef, {
-                todayDate: todayFormatted,
-                todaySteps: steps,
-                todayCalories: calories,
-            });
-            console.log('Uploaded data successfully');
-        } catch (err) {
-            console.log('Error uploading:', err);
-        }
-    }
-
     async function getCloudData() {
         try {
             const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) { // user in db
-                if (docSnap.data().todayDate != todayFormatted) { // new day, so reset daily values
-                    console.log('New day. Resetting daily values');
-                    setLocalData('steps', '0');
-                    setLocalData('calories', '0');
-                } else {    // same day, just get values
-                    console.log('Getting saved daily values');
-                    getLocalData('steps');
-                    getLocalData('calories');
-                }
+            if (docSnap.exists) { // user data exists in firebase db
+                AsyncStorage.setItem('steps', String(docSnap.data().todaySteps));
+                AsyncStorage.setItem('calories', String(docSnap.data().todayCalories));
+                AsyncStorage.setItem('metricUnits', String(docSnap.data().metricUnits));
+                console.log('Cloud data successfully loaded into local storage');
+            } else {
+                console.log('No cloud data\nChecking local data...');
+                await getLocalData();
             }
         } catch (err) {
             console.log('Failed to retrieve cloud data:', err);
-            // retrieve last saved local data as fallback
-            console.log('Getting saved daily values');
-            getLocalData('steps');
-            getLocalData('calories');
+            console.log('Checking local data...');
+            await getLocalData();
+        } finally {
+            setDataLoaded(true);
         }
     }
 
-    // save number data to local storage
-    const setLocalData = async (key: string, value: string, reset: boolean = false) => {
+    async function getLocalData() {
         try {
-            await AsyncStorage.setItem(key, value);
-            console.log(key, 'set to', value);
-        } catch (e) {
-            // saving error
-            console.log('Save error for [', key, ']: ', e);
-        }
-    };
-
-    // retrieve number data from local storage
-    const getLocalData = async (key: string) => {
-        try {
-            const value = await AsyncStorage.getItem(key);
-            if (value !== null) {
-                // value previously stored
-                console.log('Current', key, 'value:', value);
-                if (key === 'steps') {
-                    setSteps(Number(value));
-                } else if (key === 'calories') {
-                    setCalories(Number(value));
-                }
+            const step = await AsyncStorage.getItem('steps');
+            const cal = await AsyncStorage.getItem('calories');
+            const metric = await AsyncStorage.getItem('metricUnits');
+            if (step == null) {
+                AsyncStorage.setItem('steps', '0');
             } else {
-                console.log('No local data for', key);
-                setLocalExists(false);
+                setSteps(Number(step));
             }
-        } catch (e) {
-            // error reading value
-            console.log('Read error for [', key, ']: ', e);
+            if (cal == null) {
+                AsyncStorage.setItem('calories', '0');
+            } else {
+                setCalories(Number(cal));
+            }
+            if (metric == null) {
+                AsyncStorage.setItem('metricUnits', 'true');
+            }
+            console.log('Local data successfully loaded');
+        } catch (err) {
+            console.log('Failed to load local data:', err);
         }
-    };
+    }
 
-    function refreshData() {
-        getCloudData().then(() => {
-            setCloudData();
-        });
-    };
+    async function setCloudData() {
+        try {
+            const step = await AsyncStorage.getItem('steps');
+            const cal = await AsyncStorage.getItem('calories');
+            await updateDoc(docRef, {
+                todayDate: todayFormatted,
+                todaySteps: step,
+                todayCalories: cal,
+            });
+            console.log('Uploaded data successfully');
+        } catch (err) {
+            console.log('Failed to upload data:', err);
+        }
+    }
 
     useEffect(() => {
-        refreshData();
-    }, []);
+        if (!dataLoaded) {
+            getCloudData();
+        } else {
+            getLocalData();
+        }
+    }, [dataLoaded]);
 
     return (
         <ImageBackground source={assets.background} resizeMode='cover' style={styles.background}>
             <Pressable style={[styles.bubble, { marginTop: 80 }]} onPress={() => { navigation.navigate('Steps') }}>
-                <Text style={[styles.bubbleTitle, { fontSize: 48, fontFamily: 'hitMePunk' }]}>Fitness</Text>
+                <Text style={[styles.bubbleTitle, { fontSize: 48, fontFamily: 'hitMePunk' }]}>Step Counter</Text>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={[styles.container, { alignItems: 'center' }]}>
                         <Text style={styles.text}>Daily Steps</Text>
@@ -203,7 +191,7 @@ const styles = StyleSheet.create({
     bubbleTitle: {
         fontSize: 24,
         alignSelf: 'center',
-        color: 'red',
+        color: 'limegreen',
         fontFamily: 'streetSoul'
     },
     miniBubble: {
@@ -220,7 +208,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 20,
-        color: 'red',
+        color: 'cyan',
         //fontFamily: 'streetSoul',
     },
     background: {

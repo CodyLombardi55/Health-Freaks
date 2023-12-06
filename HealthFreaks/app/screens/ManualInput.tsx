@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Pressable, ImageBackground, Text, Modal, KeyboardAvoidingView, TextInput, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FIREBASE_AUTH, FIRESTORE_DB } from '../../FireBaseConfig';
+import { doc } from 'firebase/firestore';
 
 export default function ManualInput() {
     const assets = {
@@ -17,8 +19,8 @@ export default function ManualInput() {
     // shared text input var
     const [number, onChangeNumber] = useState('');
     // metric unit toggle
-    // TODO: sync with user settings
     const [metricUnits, setMetricUnits] = useState(true);
+    const docRef = doc(FIRESTORE_DB, 'users', String(FIREBASE_AUTH.currentUser?.email));
 
     // save number data to local storage
     const storeData = async (key: string, value: string, reset: boolean = false) => {
@@ -119,7 +121,7 @@ export default function ManualInput() {
                             value={number}
                             placeholder='Distance walked'
                             placeholderTextColor='gray'
-                            keyboardType='numeric'
+                            keyboardType={Platform.OS == 'android' ? 'numeric' : 'default'}
                         />
                         <Pressable style={[styles.bubble, styles.bubbleBlue]} onPress={() => setMetricUnits(!metricUnits)}>
                             <Text style={styles.text}>Metric unit toggle: {metricUnits ? 'km' : 'mi'}</Text>
@@ -149,7 +151,7 @@ export default function ManualInput() {
                                 value={number}
                                 placeholder='Calories consumed'
                                 placeholderTextColor='gray'
-                                keyboardType='numeric'
+                                keyboardType={Platform.OS == 'android' ? 'numeric' : 'default'}
                             />
                         </KeyboardAvoidingView>
                         <Pressable style={styles.bubble} onPress={() => { calcCalories() }}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TouchableOpacity, TextInput, StyleSheet, Pressable, ImageBackground } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, Pressable, ImageBackground, Platform } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function BMICalc() {
@@ -79,7 +79,7 @@ function BMICalc() {
                   placeholder="Height"
                   placeholderTextColor={'royalblue'}
                   autoCapitalize="none"
-                  keyboardType='numeric'
+                  keyboardType={Platform.OS == 'android' ? 'numeric' : 'default'}
                   onChangeText={setHeight} />
                <Pressable onPress={() => setUnits(!metricUnits)}>
                   <Text style={styles.inputToggle}>{metricUnits ? 'cm' : 'in'}</Text>
@@ -93,7 +93,7 @@ function BMICalc() {
                   placeholder="Weight"
                   placeholderTextColor={'royalblue'}
                   autoCapitalize="none"
-                  keyboardType='numeric'
+                  keyboardType={Platform.OS == 'android' ? 'numeric' : 'default'}
                   onChangeText={setWeight} />
                <Pressable onPress={() => setUnits(!metricUnits)}>
                   <Text style={styles.inputToggle}>{metricUnits ? 'kg' : 'lbs'}</Text>

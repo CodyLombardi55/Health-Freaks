@@ -46,7 +46,7 @@ const TabBar = () => {
         else if (route.name === 'Exercise') {
           iconName = focused ? 'walk-outline' : 'walk-outline' 
         }
-        else if (route.name === 'FreeWorkouts') {
+        else if (route.name === 'Videos') {
           iconName = focused ? 'desktop-outline' : 'desktop-outline';
         }
         else if (route.name === 'Settings') {
@@ -66,7 +66,7 @@ const TabBar = () => {
       <Tab.Screen name='Dashboard' component={Dashboard} options={{ unmountOnBlur: true }} />
       <Tab.Screen name='Input' component={ManualInput} />
       <Tab.Screen name='Exercise' component={Exercise} />
-      <Tab.Screen name='FreeWorkouts' component={FreeWorkouts} />
+      <Tab.Screen name='Videos' component={FreeWorkouts} />
       <Tab.Screen name='Settings' component={Settings} />
       
     </Tab.Navigator>
@@ -92,7 +92,7 @@ export default function App() {
         setLoginState(true);
       }
     });
-  }, [user]);
+  }, []);
 
   if (loginState && fontsLoaded) {
     return (
