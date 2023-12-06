@@ -51,6 +51,12 @@ export default function ManualInput() {
         }
     };
 
+    function calcCalories(){
+        storeData('calories', String(0 - Number(number)));
+        onChangeNumber('');
+        setCalVisible(false);
+    }
+
     return (
         <View style={styles.main}>
             <ImageBackground source={assets.background} resizeMode='cover' style={styles.background}>
@@ -146,7 +152,7 @@ export default function ManualInput() {
                                 keyboardType='numeric'
                             />
                         </KeyboardAvoidingView>
-                        <Pressable style={styles.bubble} onPress={() => { storeData('calories', String(0 - Number(number))); onChangeNumber(''); setCalVisible(false) }}>
+                        <Pressable style={styles.bubble} onPress={() => { calcCalories() }}>
                             <Text style={styles.text}>Enter</Text>
                         </Pressable>
                         <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { onChangeNumber(''); setCalVisible(false) }}>
