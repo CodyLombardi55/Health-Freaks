@@ -75,6 +75,8 @@ function Dashboard({ navigation }) {
             console.log('Local data successfully loaded');
         } catch (err) {
             console.log('Failed to load local data:', err);
+        } finally {
+            setCloudData();
         }
     }
 
@@ -82,8 +84,10 @@ function Dashboard({ navigation }) {
         try {
             const step = await AsyncStorage.getItem('steps');
             const cal = await AsyncStorage.getItem('calories');
+            const cloudDate = await AsyncStorage.getItem('todayDate');
+
             await updateDoc(docRef, {
-                todayDate: todayFormatted,
+                todayDate: (cloudDate == null || cloudDate != todayFormatted) ? todayFormatted : cloudDate,
                 todaySteps: step,
                 todayCalories: cal,
             });
