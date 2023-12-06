@@ -12,15 +12,19 @@ export default class App extends React.Component {
         const data = {
             labels: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
             datasets: [{
-                data: [50, 45, 60],
+                data: [508, 452, 604, 330, 305, 235, 321],
                 color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})` // change dot color
             }, {
-                data: [10]
+                data: [140, 190, 653, 630, 306, 2834, 235]
             }, {
-                data: [20]
+                data: [230, 245, 338, 200, 356, 123, 642]
             }]
         }
-        const progressChartData = [0.5, 0.6, 0.9]
+        const progressChartData = {
+            labels: ["workout 1", "workout 2", "workout 3", "workout 4"],
+            data: [0.80, 0.76, 0.20, 0.1],
+        };
+        //const progressChartData = [0.5,0.3, 0.9]
         const width = Dimensions.get('window').width
         const height = 250
         return (
