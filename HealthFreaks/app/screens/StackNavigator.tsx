@@ -11,14 +11,12 @@ const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
 
   return (
-    <NavigationContainer independent={true}>
-      <Stack.Navigator initialRouteName='Home'>
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Workout" component={WorkoutScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Fit" component={FitScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Rest" component={RestScreen} options={{ headerShown: false }} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Workout" component={WorkoutScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Fit" component={FitScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Rest" component={RestScreen} options={{ headerShown: false }} />
+    </Stack.Navigator>
   );
 };
 

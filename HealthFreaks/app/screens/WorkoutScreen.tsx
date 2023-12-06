@@ -3,8 +3,10 @@ import React from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Ionicons } from "@expo/vector-icons";
 
-const WorkoutScreen = ({ navigation, route }) => {
-    console.log(route.params.exercises);
+const WorkoutScreen = () => {
+    const route = useRoute();
+    //console.log(route.params)
+    const navigation = useNavigation();
     return (
         <>
             <ScrollView style={{ backgroundColor: "white", marginTop: 50, marginBottom: 0 }}>

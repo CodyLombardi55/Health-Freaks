@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Pressable, ImageBackground, Text, Modal, KeyboardAvoidingView, TextInput, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FIREBASE_AUTH, FIRESTORE_DB } from '../../FireBaseConfig';
-import { doc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 
 export default function ManualInput() {
     const assets = {
@@ -34,27 +34,33 @@ export default function ManualInput() {
                 await AsyncStorage.setItem(key, String(newValue));
                 console.log(key, 'changed to', String(newValue));
             }
+            setCloudData();
         } catch (e) {
             // saving error
             console.log('Save error for [', key, ']: ', e);
         }
     };
 
-    // retrieve number data from local storage
-    const getData = async (key: string) => {
+    async function setCloudData() {
         try {
-            const value = await AsyncStorage.getItem(key);
-            if (value !== null) {
-                // value previously stored
-            }
-        } catch (e) {
-            // error reading value
-            console.log('Read error for [', key, ']: ', e);
+            const steps = await AsyncStorage.getItem('steps');
+            console.log(steps);
+            const cal = await AsyncStorage.getItem('calories');
+            await updateDoc(docRef, {
+                todaySteps: steps,
+                todayCalories: cal,
+            });
+            console.log('Manual input uploaded data successfully');
+        } catch (err) {
+            console.log('Failed to upload data to cloud:', err);
         }
-    };
+    }
 
-    function calcCalories(){
-        storeData('calories', String(0 - Number(number)));
+    async function calcCalories() {
+        const calGained = Number(number);
+        const steps = await AsyncStorage.getItem('steps');
+        const calBurned = Number(steps) * 0.05;
+        storeData('calories', String(Math.round(calBurned - calGained)));
         onChangeNumber('');
         setCalVisible(false);
     }
