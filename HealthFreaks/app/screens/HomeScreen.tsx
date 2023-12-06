@@ -1,13 +1,16 @@
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, ImageBackground } from 'react-native'
 import React from 'react'
 import FitnessCards from "../../components/FitnessCards"
-
+const assets = {
+    'hitMePunk': require('../../assets/fonts/hitMePunk.ttf'),
+    'streetSoul': require('../../assets/fonts/streetSoul.ttf'),
+}
 const HomeScreen = () => {
     return (
         <ImageBackground source={require('../../assets/BACKGROUND.png')} resizeMode='cover' style={{flex:1}}>
             <ScrollView style={{ marginTop: 50 }}>
                 <View style={{ backgroundColor: "purple", padding: 10, height: "16%", width: "100%" }}>
-                    <Text style={{ color: "white", fontWeight: "bold", fontSize: 20, textAlign: "center" }}>SELF-PACED WORKOUTS</Text>
+                <Text style={styles.main}>Self-Paced Workouts</Text>
 
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 20 }}>
                         <View>
@@ -38,4 +41,12 @@ const HomeScreen = () => {
 
 export default HomeScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    main: {
+        fontSize: 48,
+        textAlign: 'center',
+        color: 'cyan',
+        fontFamily: 'hitMePunk',
+        marginTop: 30,
+    },
+})
