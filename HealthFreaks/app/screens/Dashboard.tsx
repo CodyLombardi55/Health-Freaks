@@ -116,7 +116,7 @@ function Dashboard({ navigation }) {
     return (
         <ImageBackground source={assets.background} resizeMode='cover' style={styles.background}>
             <Pressable style={[styles.bubble, { marginTop: 80 }]} onPress={() => { navigation.navigate('Steps') }}>
-                <Text style={[styles.bubbleTitle, { fontSize: 48, fontFamily: 'hitMePunk' }]}>Fitness</Text>
+                <Text style={[styles.bubbleTitle, { fontSize: 48, fontFamily: 'hitMePunk' }]}>Step Counter</Text>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={[styles.container, { alignItems: 'center' }]}>
                         <Text style={styles.text}>Daily Steps</Text>
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     bubbleTitle: {
         fontSize: 24,
         alignSelf: 'center',
-        color: 'red',
+        color: 'limegreen',
         fontFamily: 'streetSoul'
     },
     miniBubble: {
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 20,
-        color: 'red',
+        color: 'cyan',
         //fontFamily: 'streetSoul',
     },
     background: {
