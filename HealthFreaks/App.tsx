@@ -92,7 +92,7 @@ export default function App() {
         setLoginState(true);
       }
     });
-  }, [user]);
+  }, []);
 
   if (loginState && fontsLoaded) {
     return (
