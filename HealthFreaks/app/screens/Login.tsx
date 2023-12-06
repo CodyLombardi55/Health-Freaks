@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet, Button, TextInput, KeyboardAvoidingView, ActivityIndicator, ImageBackground, Platform, TouchableOpacity, Modal } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { FIREBASE_AUTH } from '../../FireBaseConfig';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from 'firebase/auth';
+import { NavigationProp, Router } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as Font from 'expo-font';
 
@@ -14,7 +15,12 @@ export async function loadCustomFonts() {
     await Font.loadAsync(customFonts);
 }
 
-const Login = () => {
+
+interface RouterProps {
+  navigation: NavigationProp<any, any>;
+}
+
+const Login = ({ navigation }: RouterProps) => {
   const [email, setEmail] = useState('');         //email text entry current state
   const [password, SetPassword] = useState('');   //password text entry current state
   const [loading, setLoading] = useState(false);  //loading state
@@ -33,6 +39,7 @@ const Login = () => {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       console.log(response);
+      navigation.navigate('Home');
     } catch (error: any) {
       console.log(error);
       alert('Sign in failed: ' + error.message);

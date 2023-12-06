@@ -1,17 +1,29 @@
+// basic design imports
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ImageBackground, Pressable } from "react-native";
+import { View, Text, StyleSheet, ImageBackground, Pressable, Platform } from "react-native";
+// for nested navigation (ie. the buttons on the dashboard page, but not the tab bar)
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// store/access user step data
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
+import { FIREBASE_AUTH, FIRESTORE_DB } from "../../FireBaseConfig";
 
+// the following are nested navigation pages (ie. the dashboard buttons)
 import Timer from './Timer';
 import BMICalc from "./BMICalc";
 import Steps from './Steps';
-import HealthTips from "./HealthTips";
 import Feed from "./Feed2";
+import Graphs from "./Feed";
 
 const Stack = createNativeStackNavigator();
 
 function Dashboard({ navigation }) {
+    const today = new Date();   // get current date according to device
+    const todayFormatted = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();  // minimal format of date as YYYY-MM-DD
+    const docRef = doc(FIRESTORE_DB, 'users', String(FIREBASE_AUTH.currentUser?.email));
+    const [dataLoaded, setDataLoaded] = useState(false);
+
     const [steps, setSteps] = useState(0);
     const [calories, setCalories] = useState(0);
     const assets = {
@@ -20,29 +32,93 @@ function Dashboard({ navigation }) {
         'background': require('../../assets/BACKGROUND.png')
     }
 
+    async function getCloudData() {
+        try {
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists) { // user data exists in firebase db
+                AsyncStorage.setItem('steps', String(docSnap.data().todaySteps));
+                AsyncStorage.setItem('calories', String(docSnap.data().todayCalories));
+                AsyncStorage.setItem('metricUnits', String(docSnap.data().metricUnits));
+                console.log('Cloud data successfully loaded into local storage');
+            } else {
+                console.log('No cloud data\nChecking local data...');
+                await getLocalData();
+            }
+        } catch (err) {
+            console.log('Failed to retrieve cloud data:', err);
+            console.log('Checking local data...');
+            await getLocalData();
+        } finally {
+            setDataLoaded(true);
+        }
+    }
+
+    async function getLocalData() {
+        try {
+            const step = await AsyncStorage.getItem('steps');
+            const cal = await AsyncStorage.getItem('calories');
+            const metric = await AsyncStorage.getItem('metricUnits');
+            if (step == null) {
+                AsyncStorage.setItem('steps', '0');
+            } else {
+                setSteps(Number(step));
+            }
+            if (cal == null) {
+                AsyncStorage.setItem('calories', '0');
+            } else {
+                setCalories(Number(cal));
+            }
+            if (metric == null) {
+                AsyncStorage.setItem('metricUnits', 'true');
+            }
+            console.log('Local data successfully loaded');
+        } catch (err) {
+            console.log('Failed to load local data:', err);
+        } finally {
+            setCloudData();
+        }
+    }
+
+    async function setCloudData() {
+        try {
+            const step = await AsyncStorage.getItem('steps');
+            const cal = await AsyncStorage.getItem('calories');
+            const cloudDate = await AsyncStorage.getItem('todayDate');
+
+            await updateDoc(docRef, {
+                todayDate: (cloudDate == null || cloudDate != todayFormatted) ? todayFormatted : cloudDate,
+                todaySteps: step,
+                todayCalories: cal,
+            });
+            console.log('Uploaded data successfully');
+        } catch (err) {
+            console.log('Failed to upload data:', err);
+        }
+    }
+
+    useEffect(() => {
+        if (!dataLoaded) {
+            getCloudData();
+        } else {
+            getLocalData();
+        }
+    }, [dataLoaded]);
+
     return (
         <ImageBackground source={assets.background} resizeMode='cover' style={styles.background}>
-            <View style={[styles.container, { marginTop: 40, flex: 0 }]}>
-                <View style={styles.bubble}>
-                    <Pressable
-                        onPress={() => { navigation.navigate('Steps') }}
-                    >
-                        <Text style={styles.bubbleTitle}>
-                            Fitness
-                        </Text>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={[styles.container, { alignItems: 'center' }]}>
-                                <Text style={styles.text}>Steps</Text>
-                                <Text style={styles.text}>{steps}</Text>
-                            </View>
-                            <View style={[styles.container, { alignItems: 'center' }]}>
-                                <Text style={styles.text}>Calories</Text>
-                                <Text style={styles.text}>{calories}</Text>
-                            </View>
-                        </View>
-                    </Pressable>
+            <Pressable style={[styles.bubble, { marginTop: 80 }]} onPress={() => { navigation.navigate('Steps') }}>
+                <Text style={[styles.bubbleTitle, { fontSize: 48, fontFamily: 'hitMePunk' }]}>Step Counter</Text>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={[styles.container, { alignItems: 'center' }]}>
+                        <Text style={styles.text}>Daily Steps</Text>
+                        <Text style={styles.text}>{steps}</Text>
+                    </View>
+                    <View style={[styles.container, { alignItems: 'center' }]}>
+                        <Text style={styles.text}>Net Calories</Text>
+                        <Text style={styles.text}>{calories}</Text>
+                    </View>
                 </View>
-            </View>
+            </Pressable>
             <View style={[styles.container, styles.centerButtons]}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                     <Pressable
@@ -51,7 +127,10 @@ function Dashboard({ navigation }) {
                     >
                         <Text style={styles.bubbleTitle}>Health Tips</Text>
                     </Pressable>
-                    <Pressable style={styles.miniBubble}>
+                    <Pressable
+                        style={styles.miniBubble}
+                        onPress={() => { navigation.navigate('Graphs') }}
+                    >
                         <Text style={styles.bubbleTitle}>Graphs</Text>
                     </Pressable>
                 </View>
@@ -80,13 +159,14 @@ export default function Main() {
             <Stack.Navigator screenOptions={{
                 headerTransparent: true,
                 headerTitle: '',
-                headerTintColor: '#fff'
+                headerTintColor: '#fff',
             }}>
                 <Stack.Screen name='Dashboard' component={Dashboard} />
                 <Stack.Screen name='Timer' component={Timer} />
                 <Stack.Screen name='BMICalc' component={BMICalc} />
                 <Stack.Screen name='Steps' component={Steps} />
                 <Stack.Screen name='Feed' component={Feed} />
+                <Stack.Screen name='Graphs' component={Graphs} />
             </Stack.Navigator>
         </NavigationContainer>
     )
@@ -101,9 +181,10 @@ const styles = StyleSheet.create({
     },
     bubble: {
         margin: 20,
+        padding: 10,
         borderWidth: 1,
-        borderRadius: 4,
-        borderColor: 'white',
+        borderRadius: 8,
+        borderColor: 'deeppink',
         flexDirection: 'column',
         backgroundColor: 'rgba(0, 0, 0, 0.69)',
         shadowColor: 'deeppink',
@@ -113,13 +194,16 @@ const styles = StyleSheet.create({
     bubbleTitle: {
         fontSize: 24,
         alignSelf: 'center',
-        color: 'red',
+        color: 'limegreen',
         fontFamily: 'streetSoul'
     },
     miniBubble: {
         padding: 10,
         flexDirection: 'column',
         backgroundColor: 'rgba(0, 0, 0, 0.69)',
+        borderWidth: 1,
+        borderColor: 'deeppink',
+        borderRadius: 8,
         shadowColor: 'deeppink',
         shadowOffset: { width: 0, height: 0 },
         shadowRadius: 20,
@@ -127,15 +211,16 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 20,
-        color: 'red',
-        fontFamily: 'streetSoul',
+        color: 'cyan',
+        //fontFamily: 'streetSoul',
     },
     background: {
         flex: 1,
         resizeMode: 'cover',
     },
     centerButtons: {
-        marginTop: 128,
+        //marginTop: 128,
+        paddingBottom: 48,
         justifyContent: 'space-evenly'
     }
 });

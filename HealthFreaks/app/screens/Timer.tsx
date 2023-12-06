@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#07121B',
     alignItems: 'center',
     justifyContent: 'space-evenly',
+    paddingVertical: 48
   },
   button: {
     borderWidth: 10,
