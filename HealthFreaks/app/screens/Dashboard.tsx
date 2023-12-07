@@ -26,7 +26,6 @@ function Dashboard({ navigation }) {
 
     const [steps, setSteps] = useState(0);
     const [calories, setCalories] = useState(0);
-
     const assets = {
         'hitMePunk': require('../../assets/fonts/hitMePunk.ttf'),
         'streetSoul': require('../../assets/fonts/streetSoul.ttf'),

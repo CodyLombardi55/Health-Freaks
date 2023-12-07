@@ -5,16 +5,11 @@
 2. Open new terminal (using button on top bar), then run command: `npx create-expo-app HealthFreaks`
 3. Close current terminal (either press the trash-can icon or press "ctrl+d")
 4. Right click new "**HealthFreaks**" folder and select "**open integrated terminal**"
-5. Run command: npx expo install react-native-web@~0.19.6 react-dom@18.2.0 @expo/webpack-config@^19.0.0
+5. Run command: npx expo install react-native-web react-dom @expo/webpack-config
     - this enables the web simulator
-    - newer versions of these may exist since the time this guide was made, so install those instead if so
 6. Run the following commands (still inside integrated terminal):
-    - npx expo install @react-native-async-storage/async-storage
-    - npx expo install react-native-screens react-native-safe-area-context expo-font firebase expo-sensors react-native-reanimated
-    - npm install @react-navigation/native
-    - npm install @react-navigation/bottom-tabs
-    - npm install @react-navigation/native-stack
-    - npm install react-native-stopwatch-timer react-native-blur react-native-circular-progress-indicator react-native-select-dropdown
+    - npx expo install react-native-screens react-native-safe-area-context expo-font firebase expo-sensors react-native-reanimated @react-native-async-storage/async-storage expo-blur
+    - npm install @react-navigation/native @react-navigation/bottom-tabs @react-navigation/native-stack react-native-stopwatch-timer react-native-blur react-native-circular-progress-indicator react-native-select-dropdown react-native-rss-parser
 7. Move the following folders from original (renamed in step 1) into new "HealthFreaks" folder. When prompted to overwrite, select **yes**. When prompted to update imports, press **no**:
     - FireBaseConfig.ts
     - App.tsx
