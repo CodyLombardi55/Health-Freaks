@@ -1,24 +1,20 @@
 // basic design imports
 import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ImageBackground, Pressable, Platform } from "react-native";
-// for nested navigation (ie. the buttons on the dashboard page, but not the tab bar)
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 // store/access user step data
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../../FireBaseConfig";
 
-// the following are nested navigation pages (ie. the dashboard buttons)
-import Timer from './Timer';
-import BMICalc from "./BMICalc";
-import Steps from './Steps';
-import Feed from "./Feed2";
-import Graphs from "./Graphs1";
+//bar chart and line chart
+import React from 'react'
+import { BarChart, LineChart } from "react-native-gifted-charts";
+import { screenWidth } from "react-native-gifted-charts/src/utils/constants";
 
-const Stack = createNativeStackNavigator();
 
-function Dashboard({ navigation }) {
+
+export default function Graphs() {
     const today = new Date();   // get current date according to device
     const todayFormatted = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();  // minimal format of date as YYYY-MM-DD
     const docRef = doc(FIRESTORE_DB, 'users', String(FIREBASE_AUTH.currentUser?.email));
@@ -26,6 +22,11 @@ function Dashboard({ navigation }) {
 
     const [steps, setSteps] = useState(0);
     const [calories, setCalories] = useState(0);
+
+// PROBLEMS: 1. everytime I get on the graphs page on the phone, i try to press something else , it freezes.
+    const Bdata = [ {value: steps}]  // 2. doesn't show up on graph
+    const Ldata = [{ value: calories, label: 'calories', labelcolor: 'white'}] //3. shows up but on the x axis line
+
 
     const assets = {
         'hitMePunk': require('../../assets/fonts/hitMePunk.ttf'),
@@ -105,78 +106,45 @@ function Dashboard({ navigation }) {
         }
     }, [dataLoaded]);
 
+
     return (
         <ImageBackground source={assets.background} resizeMode='cover' style={styles.background}>
-            <Pressable style={[styles.bubble, { marginTop: 80 }]} onPress={() => { navigation.navigate('Steps') }}>
-                <Text style={[styles.bubbleTitle, { fontSize: 48, fontFamily: 'hitMePunk' }]}>Step Counter</Text>
-                <View style={{ flexDirection: 'row' }}>
-                    <View style={[styles.container, { alignItems: 'center' }]}>
-                        <Text style={styles.text}>Daily Steps</Text>
-                        <Text style={styles.text}>{steps}</Text>
+            <View style={{ backgroundColor: "purple", padding: 10, height: "16%", width: "100%" }}>
+                <Text style={styles.main}>Daily Graph Progress</Text>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 20 }}>
+                    <View>
+                        <Text style={{ textAlign: "center", fontWeight: "bold", color: "white", fontSize: 18 }}> </Text>
+                        <Text style={{ color: "#D0D0D0", fontSize: 17, marginTop: 6 }}> </Text>
+
+                        <BarChart
+                            data={Bdata}
+                            width={screenWidth}
+                            yAxisColor={'white'}
+                            xAxisColor={'white'}
+                            
+                        />
+
+                        <LineChart
+                            data={Ldata}
+                            width={screenWidth}
+                            yAxisColor={'white'}
+                            xAxisColor={'white'}
+                            dataPointsColor1="purple"
+ 
+                        />
                     </View>
-                    <View style={[styles.container, { alignItems: 'center' }]}>
-                        <Text style={styles.text}>Net Calories</Text>
-                        <Text style={styles.text}>{calories}</Text>
-                    </View>
-                </View>
-            </Pressable>
-            <View style={[styles.container, styles.centerButtons]}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                    <Pressable
-                        style={styles.miniBubble}
-                        onPress={() => { navigation.navigate('Feed') }}
-                    >
-                        <Text style={styles.bubbleTitle}>Health Tips</Text>
-                    </Pressable>
-                    <Pressable
-                        style={styles.miniBubble}
-                        onPress={() => { navigation.navigate('Graphs') }}
-                    >
-                        <Text style={styles.bubbleTitle}>Graphs</Text>
-                    </Pressable>
-                </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                    <Pressable
-                        style={styles.miniBubble}
-                        onPress={() => { navigation.navigate('BMICalc') }}
-                    >
-                        <Text style={styles.bubbleTitle}>BMI Calc</Text>
-                    </Pressable>
-                    <Pressable
-                        style={styles.miniBubble}
-                        onPress={() => { navigation.navigate('Timer') }}
-                    >
-                        <Text style={styles.bubbleTitle}>Timer</Text>
-                    </Pressable>
                 </View>
             </View>
         </ImageBackground >
     );
 }
 
-export default function Main() {
-    return (
-        <NavigationContainer independent={true}>
-            <Stack.Navigator screenOptions={{
-                headerTransparent: true,
-                headerTitle: '',
-                headerTintColor: '#fff',
-            }}>
-                <Stack.Screen name='Dashboard' component={Dashboard} />
-                <Stack.Screen name='Timer' component={Timer} />
-                <Stack.Screen name='BMICalc' component={BMICalc} />
-                <Stack.Screen name='Steps' component={Steps} />
-                <Stack.Screen name='Feed' component={Feed} />
-                <Stack.Screen name='Graphs' component={Graphs} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    )
-}
+
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "column",
+        flexDirection: "row",
         backgroundColor: 'transparent', //makes the background image visible
         padding: 8,
     },
@@ -223,5 +191,12 @@ const styles = StyleSheet.create({
         //marginTop: 128,
         paddingBottom: 48,
         justifyContent: 'space-evenly'
+    },
+    main: {
+        fontSize: 48,
+        textAlign: 'center',
+        color: 'cyan',
+        fontFamily: 'hitMePunk',
+        marginTop: 30,
     }
-});
+})
