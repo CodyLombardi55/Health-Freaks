@@ -85,9 +85,10 @@ function Dashboard({ navigation }) {
             const step = await AsyncStorage.getItem('steps');
             const cal = await AsyncStorage.getItem('calories');
             const cloudDate = await AsyncStorage.getItem('todayDate');
+            const newDate = (cloudDate != todayFormatted) ? todayFormatted : cloudDate;
 
             await updateDoc(docRef, {
-                todayDate: (cloudDate == null || cloudDate != todayFormatted) ? todayFormatted : cloudDate,
+                todayDate: newDate,
                 todaySteps: step,
                 todayCalories: cal,
             });

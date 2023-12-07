@@ -23,9 +23,9 @@ export default function Graphs() {
     const [steps, setSteps] = useState(0);
     const [calories, setCalories] = useState(0);
 
-// PROBLEMS: 1. everytime I get on the graphs page on the phone, i try to press something else , it freezes.
-    const Bdata = [ {value: steps}]  // 2. doesn't show up on graph
-    const Ldata = [{ value: calories, label: 'calories', labelcolor: 'white'}] //3. shows up but on the x axis line
+    // PROBLEMS: 1. everytime I get on the graphs page on the phone, i try to press something else , it freezes.
+    const Bdata = [{ value: steps }]  // 2. doesn't show up on graph
+    const Ldata = [{ value: calories, label: 'calories', labelcolor: 'white' }] //3. shows up but on the x axis line
 
 
     const assets = {
@@ -109,31 +109,30 @@ export default function Graphs() {
 
     return (
         <ImageBackground source={assets.background} resizeMode='cover' style={styles.background}>
-            <View style={{ backgroundColor: "purple", padding: 10, height: "16%", width: "100%" }}>
+            <View style={{ backgroundColor: "purple", padding: 10, height: "auto", width: "100%" }}>
                 <Text style={styles.main}>Daily Graph Progress</Text>
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 20 }}>
-                    <View>
-                        <Text style={{ textAlign: "center", fontWeight: "bold", color: "white", fontSize: 18 }}> </Text>
-                        <Text style={{ color: "#D0D0D0", fontSize: 17, marginTop: 6 }}> </Text>
+            </View>
+            <View style={{ flexDirection: "column", alignItems: "center", justifyContent: "space-between" }}>
+                <Text style={{ textAlign: "center", fontWeight: "bold", color: "white", fontSize: 18 }}></Text>
+                <Text style={{ color: "#D0D0D0", fontSize: 17, marginTop: 6 }}></Text>
 
-                        <BarChart
-                            data={Bdata}
-                            width={screenWidth}
-                            yAxisColor={'white'}
-                            xAxisColor={'white'}
-                            
-                        />
+                <BarChart
+                    data={Bdata}
+                    width={screenWidth}
+                    yAxisColor={'white'}
+                    xAxisColor={'white'}
+                    frontColor={'deeppink'}
+                    yAxisTextStyle={{color: 'white'}}
+                />
 
-                        <LineChart
-                            data={Ldata}
-                            width={screenWidth}
-                            yAxisColor={'white'}
-                            xAxisColor={'white'}
-                            dataPointsColor1="purple"
- 
-                        />
-                    </View>
-                </View>
+                <LineChart
+                    data={Ldata}
+                    width={screenWidth}
+                    yAxisColor={'white'}
+                    xAxisColor={'white'}
+                    dataPointsColor1="deeppink"
+                    yAxisTextStyle={{color: 'white'}}
+                />
             </View>
         </ImageBackground >
     );
