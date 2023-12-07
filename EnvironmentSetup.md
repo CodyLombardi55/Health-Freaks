@@ -9,7 +9,7 @@
     - this enables the web simulator
 6. Run the following commands (still inside integrated terminal):
     - npx expo install react-native-screens react-native-safe-area-context expo-font firebase expo-sensors react-native-reanimated @react-native-async-storage/async-storage expo-blur
-    - npm install @react-navigation/native @react-navigation/bottom-tabs @react-navigation/native-stack react-native-stopwatch-timer react-native-blur react-native-circular-progress-indicator react-native-select-dropdown react-native-rss-parser
+    - npm install @react-navigation/native @react-navigation/bottom-tabs @react-navigation/native-stack react-native-stopwatch-timer react-native-blur react-native-circular-progress-indicator react-native-select-dropdown react-native-rss-parser react-native-gifted-charts react-native-linear-gradient react-native-svg
 7. Move the following folders from original (renamed in step 1) into new "HealthFreaks" folder. When prompted to overwrite, select **yes**. When prompted to update imports, press **no**:
     - FireBaseConfig.ts
     - App.tsx
