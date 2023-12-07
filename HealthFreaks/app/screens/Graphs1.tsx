@@ -113,25 +113,23 @@ export default function Graphs() {
                 <Text style={styles.main}>Daily Graph Progress</Text>
             </View>
             <View style={{ flexDirection: "column", alignItems: "center", justifyContent: "space-between" }}>
-                <Text style={{ textAlign: "center", fontWeight: "bold", color: "white", fontSize: 18 }}></Text>
-                <Text style={{ color: "#D0D0D0", fontSize: 17, marginTop: 6 }}></Text>
-
+                <Text style={{ textAlign: "center", fontWeight: "bold", color: "white", fontSize: 18 }}>Steps</Text>
                 <BarChart
                     data={Bdata}
                     width={screenWidth}
                     yAxisColor={'white'}
                     xAxisColor={'white'}
                     frontColor={'deeppink'}
-                    yAxisTextStyle={{color: 'white'}}
+                    yAxisTextStyle={{ color: 'white' }}
                 />
-
+                <Text style={{ textAlign: "center", fontWeight: "bold", color: "white", fontSize: 18 }}>Calories</Text>
                 <LineChart
                     data={Ldata}
                     width={screenWidth}
                     yAxisColor={'white'}
                     xAxisColor={'white'}
                     dataPointsColor1="deeppink"
-                    yAxisTextStyle={{color: 'white'}}
+                    yAxisTextStyle={{ color: 'white' }}
                 />
             </View>
         </ImageBackground >

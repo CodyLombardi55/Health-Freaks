@@ -21,19 +21,18 @@ export default function ManualInput() {
     // metric unit toggle
     const [metricUnits, setMetricUnits] = useState(true);
     const docRef = doc(FIRESTORE_DB, 'users', String(FIREBASE_AUTH.currentUser?.email));
+    // temp value for calories
+    const [cal, setCal] = useState(0);
 
     // save number data to local storage
-    const storeData = async (key: string, value: string, reset: boolean = false) => {
+    const storeData = async (key: string, value: string, cal: number = 0) => {
         try {
-            if (reset) {    // only for testing purposes on this screen
-                await AsyncStorage.setItem(key, value);
-                console.log(key, 'reset to', value);
-            } else {
-                var newValue;   // to store final value after addition
-                await AsyncStorage.getItem(key).then((result) => newValue = Number(result) + Number(value)); // newValue = previousValue + inputValue
-                await AsyncStorage.setItem(key, String(newValue));
-                console.log(key, 'changed to', String(newValue));
-            }
+            var newSteps;   // to store final value after addition
+            await AsyncStorage.getItem(key).then((result) => newSteps = Number(result) + Number(value)); // newSteps = previousValue + inputValue
+            await AsyncStorage.setItem(key, String(newSteps));
+            console.log(key, 'changed to', String(newSteps));
+            await calcCalories(cal);
+            await AsyncStorage.setItem('calories', String(cal));
             setCloudData();
         } catch (e) {
             // saving error
@@ -44,11 +43,11 @@ export default function ManualInput() {
     async function setCloudData() {
         try {
             const steps = await AsyncStorage.getItem('steps');
-            console.log(steps);
-            const cal = await AsyncStorage.getItem('calories');
+            const calor = await AsyncStorage.getItem('calories');
+            console.log('calor:', calor);
             await updateDoc(docRef, {
                 todaySteps: steps,
-                todayCalories: cal,
+                todayCalories: calor,
             });
             console.log('Manual input uploaded data successfully');
         } catch (err) {
@@ -56,13 +55,11 @@ export default function ManualInput() {
         }
     }
 
-    async function calcCalories() {
-        const calGained = Number(number);
+    async function calcCalories(calGained: number) {
         const steps = await AsyncStorage.getItem('steps');
         const calBurned = Number(steps) * 0.05;
-        storeData('calories', String(Math.round(calBurned - calGained)));
-        onChangeNumber('');
-        setCalVisible(false);
+        setCal(Math.round(calBurned - calGained));
+        console.log('calories:', cal);
     }
 
     return (
@@ -160,7 +157,7 @@ export default function ManualInput() {
                                 keyboardType={Platform.OS == 'android' ? 'numeric' : 'default'}
                             />
                         </KeyboardAvoidingView>
-                        <Pressable style={styles.bubble} onPress={() => { calcCalories() }}>
+                        <Pressable style={styles.bubble} onPress={() => { storeData('steps', '0', Number(number)) }}>
                             <Text style={styles.text}>Enter</Text>
                         </Pressable>
                         <Pressable style={[styles.bubble, styles.bubbleRed]} onPress={() => { onChangeNumber(''); setCalVisible(false) }}>
